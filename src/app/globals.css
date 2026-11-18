@@ -3,35 +3,35 @@
 @tailwind utilities;
 
 :root {
-  --background: 220 25% 4%;
+  --background: 224 25% 4%;
   --foreground: 210 20% 98%;
   --card: 222 24% 6%;
   --card-foreground: 210 20% 98%;
   --popover: 222 24% 6%;
   --popover-foreground: 210 20% 98%;
-  --primary: 188 95% 43%;
-  --primary-foreground: 220 25% 4%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 224 25% 4%;
   --secondary: 220 18% 12%;
   --secondary-foreground: 210 20% 98%;
   --muted: 220 16% 14%;
   --muted-foreground: 215 15% 65%;
   --accent: 38 92% 50%;
-  --accent-foreground: 220 25% 4%;
+  --accent-foreground: 224 25% 4%;
   --destructive: 347 90% 60%;
   --destructive-foreground: 210 20% 98%;
   --border: 220 16% 14%;
   --input: 220 16% 14%;
-  --ring: 188 95% 43%;
+  --ring: 217 91% 60%;
   --radius: 0.85rem;
 }
 
 body {
   color: hsl(var(--foreground));
-  background-color: #07090e;
+  background-color: #08090e;
   font-feature-settings: "rlig" 1, "calt" 1, "tnum" 1;
   overflow-x: hidden;
-  selection-background-color: #06b6d4;
-  selection-color: #000;
+  selection-background-color: #3b82f6;
+  selection-color: #fff;
 }
 
 /* Custom modern scrollbar */
@@ -40,10 +40,10 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #07090e;
+  background: #08090e;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #1e2538;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -57,6 +57,17 @@ body {
 
 /* Awwwards Subtle Background Grain Overlay */
 .bg-noise-scrim {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0);
-  background-size: 28px 28px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+
+/* High-craft Glassmorphic Card */
+.glass-panel {
+  background: rgba(12, 14, 21, 0.82);
+  backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel:hover {
+  border-color: rgba(255, 255, 255, 0.16);
 }

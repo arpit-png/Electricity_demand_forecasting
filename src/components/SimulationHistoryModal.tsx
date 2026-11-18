@@ -58,7 +58,7 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
         scenarioParams: currentParams,
         summary: currentSummary,
         notes: simNotes.trim() || undefined,
-        author: "Team 08 (Arpit Shukla)",
+        author: "Grid Control System",
       });
 
       setSaveSuccess(true);

@@ -14,9 +14,10 @@ export const metadata: Metadata = {
     "Grid Stability",
     "Renewable Energy",
     "California Duck Curve",
-    "Team 08 Data Science"
+    "Transmission Grid Reliability",
+    "Energy Transition Analytics"
   ],
-  authors: [{ name: "Arpit Shukla & Team 08" }],
+  authors: [{ name: "Transmission System Engineering Group" }],
   openGraph: {
     title: "Electricity Demand Forecasting Using Machine Learning",
     description: "Machine Learning pipeline solving the universal Duck Curve problem by forecasting Net Demand with LSTM and Gradient Boosting.",

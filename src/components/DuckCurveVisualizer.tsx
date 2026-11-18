@@ -18,6 +18,7 @@ import { formatMW } from "@/lib/utils";
 import { Sun, Wind, Zap, AlertTriangle, BatteryCharging, Play, Pause, RotateCcw } from "lucide-react";
 import { BentoCard } from "./skiper-ui/skiper-bento-grid";
 import { SkiperTabs } from "./skiper-ui/skiper-tabs";
+import { SkiperFrequencyWave } from "./skiper-ui/skiper-frequency-wave";
 
 interface DuckCurveVisualizerProps {
   data: HourlyDataPoint[];
@@ -344,6 +345,14 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Live AC Oscilloscope Frequency Waveform */}
+      <div className="mt-4">
+        <SkiperFrequencyWave
+          rampRate={currentPoint.rampRate}
+          status={summary.overallStatus}
+        />
       </div>
 
       {/* Real-Time Live Point Telemetry Strip */}

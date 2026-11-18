@@ -94,7 +94,7 @@ function getLocalSimulations(): SimulationRecord[] {
             overallStatus: "CRITICAL_DISPATCH_REQUIRED",
           },
           notes: "Deep duck curve observed with 13.4 GW 3-hour evening ramp. Battery storage absorbed 14.2 GWh of midday solar and discharged during the 19:00 peak, mitigating major blackout risks.",
-          author: "Team 08 (Arpit Shukla & Team)",
+          author: "Autonomous Dispatch Engine",
         },
         {
           id: "sim-seed-2",
@@ -126,7 +126,7 @@ function getLocalSimulations(): SimulationRecord[] {
             overallStatus: "STABLE",
           },
           notes: "Heavy cloud attenuation flattened the midday solar belly; wind gusting in evening lessened the net ramp slope.",
-          author: "Team 08 (Nihad Khan)",
+          author: "Grid Reliability Telemetry",
         },
       ];
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(initial));
