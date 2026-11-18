@@ -1,26 +1,26 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeProvider } from "@/lib/theme-context";
 
 export const metadata: Metadata = {
-  title: "Google Cloud | Electricity Net Demand Forecasting & Duck Curve Intelligence Engine",
-  description: "Enterprise Net Demand forecasting platform solving the universal Duck Curve grid instability and 3-hour evening ramp challenge using DeepMind Bi-LSTM, Vertex AI Gradient Boosting, and BigQuery data pipelines.",
+  title: "Electricity Net Demand Forecasting | Duck Curve Machine Learning Platform",
+  description: "Advanced time-series forecasting pipeline solving the universal Duck Curve grid instability and 3-hour evening ramp challenge using Bidirectional LSTM, Gradient Boosted Trees, and Multivariate Regression.",
   keywords: [
-    "Google Cloud",
-    "Vertex AI",
     "Duck Curve",
     "Net Demand Forecasting",
-    "DeepMind LSTM",
+    "Machine Learning",
+    "Bidirectional LSTM",
     "Gradient Boosting",
+    "XGBoost",
     "Grid Stability",
     "Renewable Energy Dispatch",
-    "California CAISO",
-    "BigQuery Energy Analytics",
-    "IEEE 1547"
+    "IEEE 1547",
+    "NERC Reliability",
   ],
-  authors: [{ name: "Google Cloud Energy & Utilities Engineering Group" }],
+  authors: [{ name: "Transmission System Engineering Group" }],
   openGraph: {
-    title: "Google Cloud | Electricity Net Demand Forecasting & Duck Curve Intelligence",
-    description: "Enterprise machine learning platform forecasting electricity net demand to mitigate rapid evening solar ramp and prevent blackout risk.",
+    title: "Electricity Net Demand Forecasting | Duck Curve ML Platform",
+    description: "Time-series machine learning system forecasting net electricity demand to prevent evening ramp blackouts and optimize storage dispatch.",
     type: "website",
   },
 };
@@ -31,17 +31,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
-      <body className="min-h-screen bg-[#131314] text-[#e8eaed] antialiased selection:bg-[#8ab4f8] selection:text-[#041e49]">
-        {/* Subtle Google engineering dot scrim */}
-        <div className="fixed inset-0 bg-google-grid pointer-events-none z-0 opacity-40" />
-        <div className="relative z-10 flex flex-col min-h-screen">
-          {children}
-        </div>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className="min-h-screen bg-background text-foreground antialiased selection:bg-blue-500 selection:text-white">
+        <ThemeProvider>
+          {/* Subtle grid pattern background */}
+          <div className="fixed inset-0 bg-grid-pattern pointer-events-none z-0 opacity-80" />
+          <div className="relative z-10 flex flex-col min-h-screen">
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

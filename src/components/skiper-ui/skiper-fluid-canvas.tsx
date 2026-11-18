@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { useTheme } from "@/lib/theme-context";
 
 interface SkiperFluidCanvasProps {
   mode?: "normal" | "solar" | "ramp" | "battery";
@@ -9,9 +10,10 @@ interface SkiperFluidCanvasProps {
 
 export const SkiperFluidCanvas: React.FC<SkiperFluidCanvasProps> = ({
   mode = "normal",
-  intensity = 0.8,
+  intensity = 0.7,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -32,7 +34,6 @@ export const SkiperFluidCanvas: React.FC<SkiperFluidCanvasProps> = ({
 
     window.addEventListener("resize", handleResize);
 
-    // Mouse velocity tracker
     const mouse = {
       x: width / 2,
       y: height / 2,
@@ -49,91 +50,85 @@ export const SkiperFluidCanvas: React.FC<SkiperFluidCanvasProps> = ({
 
     window.addEventListener("mousemove", handleMouseMove);
 
-    // Google 4-Color Ambient Fluid Particles
-    const PARTICLE_COUNT = 24;
+    const isDark = theme === "dark";
+
+    // Clean modern color nodes
+    const PARTICLE_COUNT = 18;
     const particles = Array.from({ length: PARTICLE_COUNT }, (_, i) => {
-      // Rotate through Google colors: Blue, Red, Yellow, Green
-      const googleColors = [
-        "rgba(66, 133, 244,",  // Google Blue
-        "rgba(234, 67, 53,",   // Google Red
-        "rgba(251, 188, 4,",   // Google Yellow
-        "rgba(52, 168, 83,",   // Google Green
+      const darkColors = [
+        "rgba(37, 99, 235,",   // Blue
+        "rgba(225, 29, 72,",   // Rose
+        "rgba(217, 119, 6,",   // Amber
+        "rgba(5, 150, 105,",   // Emerald
       ];
-      const baseColor = googleColors[i % 4];
+      const lightColors = [
+        "rgba(59, 130, 246,",  // Soft Blue
+        "rgba(244, 63, 94,",   // Soft Rose
+        "rgba(245, 158, 11,",  // Soft Amber
+        "rgba(16, 185, 129,",  // Soft Emerald
+      ];
+      const baseColor = (isDark ? darkColors : lightColors)[i % 4];
 
       return {
         x: Math.random() * width,
         y: Math.random() * height,
-        baseRadius: Math.random() * 120 + 80,
-        radius: Math.random() * 120 + 80,
-        vx: (Math.random() - 0.5) * 0.45,
-        vy: (Math.random() - 0.5) * 0.45,
+        baseRadius: Math.random() * 110 + 70,
+        radius: Math.random() * 110 + 70,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
         baseColor,
-        alpha: Math.random() * 0.045 + 0.015,
+        alpha: isDark ? Math.random() * 0.04 + 0.015 : Math.random() * 0.035 + 0.01,
         pulseSpeed: Math.random() * 0.02 + 0.005,
         angle: Math.random() * Math.PI * 2,
       };
     });
 
-    let time = 0;
-
     const render = () => {
-      time += 0.01;
-
-      // Smooth mouse interpolation
       mouse.vx = (mouse.targetX - mouse.x) * 0.05;
       mouse.vy = (mouse.targetY - mouse.y) * 0.05;
       mouse.x += mouse.vx;
       mouse.y += mouse.vy;
 
-      // Google Dark Canvas Clear
-      ctx.fillStyle = "#131314";
+      // Background clear
+      ctx.fillStyle = isDark ? "#090d16" : "#f8fafc";
       ctx.fillRect(0, 0, width, height);
 
-      // Render each soft fluid light node
       particles.forEach((p, idx) => {
         p.angle += p.pulseSpeed;
-        p.radius = p.baseRadius + Math.sin(p.angle) * 20;
+        p.radius = p.baseRadius + Math.sin(p.angle) * 18;
 
-        // Influence by mode
         let colorPrefix = p.baseColor;
         let modeAlphaMultiplier = 1.0;
 
         if (mode === "solar") {
-          // Solar noon: enhance Google Yellow / Amber
-          if (idx % 2 === 0) colorPrefix = "rgba(251, 188, 4,";
-          modeAlphaMultiplier = 1.3;
+          if (idx % 2 === 0) colorPrefix = "rgba(217, 119, 6,";
+          modeAlphaMultiplier = 1.25;
         } else if (mode === "ramp") {
-          // Critical evening duck ramp: enhance Google Red
-          if (idx % 2 === 0) colorPrefix = "rgba(234, 67, 53,";
-          modeAlphaMultiplier = 1.4;
+          if (idx % 2 === 0) colorPrefix = "rgba(225, 29, 72,";
+          modeAlphaMultiplier = 1.35;
         } else if (mode === "battery") {
-          // Battery storage dispatch: enhance Google Green
-          if (idx % 2 === 0) colorPrefix = "rgba(52, 168, 83,";
+          if (idx % 2 === 0) colorPrefix = "rgba(5, 150, 105,";
           modeAlphaMultiplier = 1.2;
         }
 
-        // Slight drift towards mouse
         const dx = mouse.x - p.x;
         const dy = mouse.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 400) {
-          const force = (400 - dist) / 400;
-          p.x += (dx / dist) * force * 0.6;
-          p.y += (dy / dist) * force * 0.6;
+        if (dist < 350) {
+          const force = (350 - dist) / 350;
+          p.x += (dx / dist) * force * 0.5;
+          p.y += (dy / dist) * force * 0.5;
         }
 
         p.x += p.vx;
         p.y += p.vy;
 
-        // Wrap around bounds smoothly
         if (p.x < -p.radius) p.x = width + p.radius;
         if (p.x > width + p.radius) p.x = -p.radius;
         if (p.y < -p.radius) p.y = height + p.radius;
         if (p.y > height + p.radius) p.y = -p.radius;
 
-        // Draw radial chromatic light
         const effectiveAlpha = p.alpha * intensity * modeAlphaMultiplier;
         const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
         gradient.addColorStop(0, `${colorPrefix}${effectiveAlpha})`);
@@ -156,12 +151,12 @@ export const SkiperFluidCanvas: React.FC<SkiperFluidCanvasProps> = ({
       window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [mode, intensity]);
+  }, [mode, intensity, theme]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-0 opacity-80 transition-opacity duration-1000"
+      className="pointer-events-none fixed inset-0 z-0 opacity-70 transition-opacity duration-1000"
     />
   );
 };

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 interface BentoCardProps {
   children: React.ReactNode;
   className?: string;
-  glowColor?: "blue" | "green" | "yellow" | "red" | "purple" | "gold" | "steel" | "terracotta" | "sage";
+  glowColor?: "blue" | "green" | "amber" | "rose" | "violet" | "cyan" | "gold" | "steel" | "terracotta" | "sage" | "purple" | "yellow" | "red";
   badge?: string;
   title?: string;
   subtitle?: string;
@@ -24,41 +24,53 @@ export const BentoCard: React.FC<BentoCardProps> = ({
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
-  // Google Material 3 Tonal Spotlights
+  // Modern subtle radial glows
   const glowStyles = {
-    blue: "rgba(66, 133, 244, 0.12)",
-    gold: "rgba(251, 188, 4, 0.12)",
-    yellow: "rgba(251, 188, 4, 0.12)",
-    green: "rgba(52, 168, 83, 0.12)",
-    sage: "rgba(52, 168, 83, 0.12)",
-    red: "rgba(234, 67, 53, 0.12)",
-    terracotta: "rgba(234, 67, 53, 0.12)",
-    purple: "rgba(161, 66, 244, 0.12)",
-    steel: "rgba(138, 180, 248, 0.12)",
+    blue: "rgba(37, 99, 235, 0.08)",
+    steel: "rgba(37, 99, 235, 0.08)",
+    amber: "rgba(217, 119, 6, 0.08)",
+    yellow: "rgba(217, 119, 6, 0.08)",
+    gold: "rgba(217, 119, 6, 0.08)",
+    green: "rgba(5, 150, 105, 0.08)",
+    sage: "rgba(5, 150, 105, 0.08)",
+    rose: "rgba(225, 29, 72, 0.08)",
+    red: "rgba(225, 29, 72, 0.08)",
+    terracotta: "rgba(225, 29, 72, 0.08)",
+    violet: "rgba(124, 58, 237, 0.08)",
+    purple: "rgba(124, 58, 237, 0.08)",
+    cyan: "rgba(8, 145, 178, 0.08)",
   }[glowColor];
 
   const borderHoverStyles = {
-    blue: "hover:border-[#8ab4f8]/50",
-    gold: "hover:border-[#fdd663]/50",
-    yellow: "hover:border-[#fdd663]/50",
-    green: "hover:border-[#81c995]/50",
-    sage: "hover:border-[#81c995]/50",
-    red: "hover:border-[#f28b82]/50",
-    terracotta: "hover:border-[#f28b82]/50",
-    purple: "hover:border-[#c58af9]/50",
-    steel: "hover:border-[#8ab4f8]/50",
+    blue: "hover:border-blue-500/40 dark:hover:border-blue-400/40",
+    steel: "hover:border-blue-500/40 dark:hover:border-blue-400/40",
+    amber: "hover:border-amber-500/40 dark:hover:border-amber-400/40",
+    yellow: "hover:border-amber-500/40 dark:hover:border-amber-400/40",
+    gold: "hover:border-amber-500/40 dark:hover:border-amber-400/40",
+    green: "hover:border-emerald-500/40 dark:hover:border-emerald-400/40",
+    sage: "hover:border-emerald-500/40 dark:hover:border-emerald-400/40",
+    rose: "hover:border-rose-500/40 dark:hover:border-rose-400/40",
+    red: "hover:border-rose-500/40 dark:hover:border-rose-400/40",
+    terracotta: "hover:border-rose-500/40 dark:hover:border-rose-400/40",
+    violet: "hover:border-violet-500/40 dark:hover:border-violet-400/40",
+    purple: "hover:border-violet-500/40 dark:hover:border-violet-400/40",
+    cyan: "hover:border-cyan-500/40 dark:hover:border-cyan-400/40",
   }[glowColor];
 
   const badgeColorStyles = {
-    blue: "bg-[#1b2b44] text-[#8ab4f8] border-[#8ab4f8]/30",
-    gold: "bg-[#332800] text-[#fdd663] border-[#fdd663]/30",
-    yellow: "bg-[#332800] text-[#fdd663] border-[#fdd663]/30",
-    green: "bg-[#0d2818] text-[#81c995] border-[#81c995]/30",
-    sage: "bg-[#0d2818] text-[#81c995] border-[#81c995]/30",
-    red: "bg-[#331111] text-[#f28b82] border-[#f28b82]/30",
-    terracotta: "bg-[#331111] text-[#f28b82] border-[#f28b82]/30",
-    purple: "bg-[#281438] text-[#c58af9] border-[#c58af9]/30",
-    steel: "bg-[#1b2b44] text-[#8ab4f8] border-[#8ab4f8]/30",
+    blue: "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/60 dark:text-blue-400 dark:border-blue-800/60",
+    steel: "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/60 dark:text-blue-400 dark:border-blue-800/60",
+    amber: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/60 dark:text-amber-400 dark:border-amber-800/60",
+    yellow: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/60 dark:text-amber-400 dark:border-amber-800/60",
+    gold: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/60 dark:text-amber-400 dark:border-amber-800/60",
+    green: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-400 dark:border-emerald-800/60",
+    sage: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-400 dark:border-emerald-800/60",
+    rose: "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-400 dark:border-rose-800/60",
+    red: "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-400 dark:border-rose-800/60",
+    terracotta: "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-400 dark:border-rose-800/60",
+    violet: "bg-violet-50 text-violet-700 border-violet-200 dark:bg-violet-950/60 dark:text-violet-400 dark:border-violet-800/60",
+    purple: "bg-violet-50 text-violet-700 border-violet-200 dark:bg-violet-950/60 dark:text-violet-400 dark:border-violet-800/60",
+    cyan: "bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-950/60 dark:text-cyan-400 dark:border-cyan-800/60",
   }[glowColor];
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -77,17 +89,18 @@ export const BentoCard: React.FC<BentoCardProps> = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-[#3c4043] bg-[#202124] p-6 transition-all duration-300 shadow-md",
+        "group relative overflow-hidden rounded-2xl border p-6 transition-all duration-300 shadow-sm",
+        "bg-white border-slate-200 text-slate-900 dark:bg-[#111827] dark:border-slate-800 dark:text-slate-100",
         borderHoverStyles,
         className
       )}
     >
-      {/* Specular Google spotlight on hover */}
+      {/* Specular spotlight on hover */}
       {isHovered && (
         <div
           className="pointer-events-none absolute -inset-px transition-opacity duration-300 opacity-100"
           style={{
-            background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, ${glowStyles}, transparent 70%)`,
+            background: `radial-gradient(350px circle at ${mousePos.x}px ${mousePos.y}px, ${glowStyles}, transparent 70%)`,
           }}
         />
       )}
@@ -99,7 +112,7 @@ export const BentoCard: React.FC<BentoCardProps> = ({
             {badge && (
               <span
                 className={cn(
-                  "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-sans font-medium tracking-wide uppercase border",
+                  "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium tracking-wide uppercase border",
                   badgeColorStyles
                 )}
               >
@@ -109,12 +122,12 @@ export const BentoCard: React.FC<BentoCardProps> = ({
             )}
           </div>
           {title && (
-            <h3 className="text-lg sm:text-xl font-bold font-sans tracking-tight text-[#e8eaed]">
+            <h3 className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white">
               {title}
             </h3>
           )}
           {subtitle && (
-            <p className="text-xs sm:text-sm text-[#9aa0a6] mt-1 font-sans">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
               {subtitle}
             </p>
           )}

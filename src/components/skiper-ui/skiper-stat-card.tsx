@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { TrendingUp, TrendingDown, AlertTriangle, ShieldCheck, Activity, Zap } from "lucide-react";
+import { TrendingUp, TrendingDown, AlertTriangle, Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SkiperStatCardProps {
@@ -28,34 +28,34 @@ export const SkiperStatCard: React.FC<SkiperStatCardProps> = ({
 }) => {
   const variantStyles = {
     default: {
-      border: "border-[#3c4043] hover:border-[#8ab4f8]/50",
-      accent: "text-[#8ab4f8]",
-      badge: "bg-[#18191c] text-[#9aa0a6] border-[#3c4043]",
+      border: "border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500",
+      accent: "text-blue-600 dark:text-blue-400",
+      badge: "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700",
     },
     blue: {
-      border: "border-[#3c4043] hover:border-[#8ab4f8]/70",
-      accent: "text-[#8ab4f8]",
-      badge: "bg-[#1b2b44] text-[#8ab4f8] border-[#8ab4f8]/30",
+      border: "border-slate-200 dark:border-slate-800 hover:border-blue-500 dark:hover:border-blue-400",
+      accent: "text-blue-600 dark:text-blue-400",
+      badge: "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/60 dark:text-blue-400 dark:border-blue-800",
     },
     critical: {
-      border: "border-[#ea4335]/40 hover:border-[#ea4335]/70",
-      accent: "text-[#f28b82]",
-      badge: "bg-[#331111] text-[#f28b82] border-[#f28b82]/40",
+      border: "border-rose-200 dark:border-rose-900/60 hover:border-rose-500",
+      accent: "text-rose-600 dark:text-rose-400",
+      badge: "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-400 dark:border-rose-800",
     },
     warning: {
-      border: "border-[#fbbc04]/40 hover:border-[#fbbc04]/70",
-      accent: "text-[#fdd663]",
-      badge: "bg-[#332800] text-[#fdd663] border-[#fdd663]/40",
+      border: "border-amber-200 dark:border-amber-900/60 hover:border-amber-500",
+      accent: "text-amber-600 dark:text-amber-400",
+      badge: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/60 dark:text-amber-400 dark:border-amber-800",
     },
     success: {
-      border: "border-[#34a853]/40 hover:border-[#34a853]/70",
-      accent: "text-[#81c995]",
-      badge: "bg-[#0d2818] text-[#81c995] border-[#81c995]/40",
+      border: "border-emerald-200 dark:border-emerald-900/60 hover:border-emerald-500",
+      accent: "text-emerald-600 dark:text-emerald-400",
+      badge: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-400 dark:border-emerald-800",
     },
     purple: {
-      border: "border-[#a142f4]/40 hover:border-[#a142f4]/70",
-      accent: "text-[#c58af9]",
-      badge: "bg-[#281438] text-[#c58af9] border-[#c58af9]/40",
+      border: "border-violet-200 dark:border-violet-900/60 hover:border-violet-500",
+      accent: "text-violet-600 dark:text-violet-400",
+      badge: "bg-violet-50 text-violet-700 border-violet-200 dark:bg-violet-950/60 dark:text-violet-400 dark:border-violet-800",
     },
   }[variant];
 
@@ -64,17 +64,18 @@ export const SkiperStatCard: React.FC<SkiperStatCardProps> = ({
       whileHover={{ y: -2 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
       className={cn(
-        "relative overflow-hidden rounded-2xl bg-[#202124] border p-5 shadow-sm transition-all duration-200",
+        "relative overflow-hidden rounded-2xl border p-5 shadow-sm transition-all duration-200",
+        "bg-white dark:bg-[#111827] text-slate-900 dark:text-slate-100",
         variantStyles.border
       )}
     >
       {/* Top Header Row */}
       <div className="flex items-center justify-between gap-2 mb-3">
-        <span className="text-xs font-sans text-[#9aa0a6] font-medium tracking-tight">
+        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium tracking-tight">
           {label}
         </span>
         {icon && (
-          <span className={cn("p-1.5 rounded-lg bg-[#28292c]", variantStyles.accent)}>
+          <span className={cn("p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800", variantStyles.accent)}>
             {icon}
           </span>
         )}
@@ -82,25 +83,25 @@ export const SkiperStatCard: React.FC<SkiperStatCardProps> = ({
 
       {/* Main Metric Value */}
       <div className="flex items-baseline gap-2 mb-1.5">
-        <span className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-[#e8eaed]">
+        <span className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-slate-900 dark:text-white">
           {value}
         </span>
         {subValue && (
-          <span className="text-xs text-[#9aa0a6] font-mono">
+          <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
             {subValue}
           </span>
         )}
       </div>
 
       {/* Bottom Trend / Badge Row */}
-      <div className="flex items-center justify-between gap-2 mt-3 pt-2.5 border-t border-[#3c4043]/60 text-xs">
+      <div className="flex items-center justify-between gap-2 mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-xs">
         {trendLabel && (
           <div className="flex items-center gap-1">
-            {trend === "up" && <TrendingUp className="w-3.5 h-3.5 text-[#f28b82]" />}
-            {trend === "down" && <TrendingDown className="w-3.5 h-3.5 text-[#81c995]" />}
-            {trend === "warning" && <AlertTriangle className="w-3.5 h-3.5 text-[#fdd663]" />}
-            {trend === "neutral" && <Activity className="w-3.5 h-3.5 text-[#8ab4f8]" />}
-            <span className="text-[11px] font-sans text-[#9aa0a6]">{trendLabel}</span>
+            {trend === "up" && <TrendingUp className="w-3.5 h-3.5 text-rose-500" />}
+            {trend === "down" && <TrendingDown className="w-3.5 h-3.5 text-emerald-500" />}
+            {trend === "warning" && <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />}
+            {trend === "neutral" && <Activity className="w-3.5 h-3.5 text-blue-500" />}
+            <span className="text-[11px] text-slate-500 dark:text-slate-400">{trendLabel}</span>
           </div>
         )}
 

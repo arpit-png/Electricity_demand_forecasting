@@ -1,83 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500;700&family=Roboto+Mono:wght@400;500;600&family=Roboto:wght@300;400;500;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: 240 4% 8%; /* #131314 Google Dark Canvas */
-  --foreground: 220 14% 92%; /* #e8eaed Google Text Primary */
-  --card: 228 6% 13%; /* #202124 Google Surface Container */
-  --card-foreground: 220 14% 92%;
-  --popover: 228 6% 16%; /* #28292c */
-  --popover-foreground: 220 14% 92%;
-  --primary: 217 89% 76%; /* #8ab4f8 Google Blue 300 */
-  --primary-foreground: 219 90% 15%;
-  --secondary: 225 6% 20%; /* #303134 Google Surface Container Highest */
-  --secondary-foreground: 220 14% 92%;
-  --muted: 228 6% 16%;
-  --muted-foreground: 218 11% 65%; /* #9aa0a6 Google Text Secondary */
-  --accent: 138 48% 68%; /* #81c995 Google Green 300 */
-  --accent-foreground: 139 70% 9%;
-  --destructive: 6 78% 73%; /* #f28b82 Google Red 300 */
-  --destructive-foreground: 6 78% 10%;
-  --border: 216 5% 25%; /* #3c4043 Google Outline */
-  --input: 216 5% 25%;
-  --ring: 217 89% 76%;
-  --radius: 1rem;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --border: #e2e8f0;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #2563eb;
+}
+
+.dark {
+  --background: #090d16;
+  --foreground: #f8fafc;
+  --card: #111827;
+  --card-foreground: #f8fafc;
+  --border: #1e293b;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #60a5fa;
 }
 
 body {
-  color: #e8eaed;
-  background-color: #131314;
-  font-family: 'Google Sans', 'Google Sans Text', Roboto, system-ui, -apple-system, sans-serif;
+  color: var(--foreground);
+  background-color: var(--background);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum" 1;
   overflow-x: hidden;
-  selection-background-color: #8ab4f8;
-  selection-color: #041e49;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Google-style rounded scrollbar */
+/* Rounded smooth scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #131314;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #3c4043;
+  background: #cbd5e1;
   border-radius: 9999px;
-  border: 2px solid #131314;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #5f6368;
+  background: #94a3b8;
 }
-
-/* Google 4-Color Gradient Bar */
-.google-brand-bar {
-  background: linear-gradient(
-    90deg,
-    #4285f4 0%,
-    #4285f4 25%,
-    #ea4335 25%,
-    #ea4335 50%,
-    #fbbc04 50%,
-    #fbbc04 75%,
-    #34a853 75%,
-    #34a853 100%
-  );
-}
-
-.google-brand-gradient-smooth {
-  background: linear-gradient(
-    90deg,
-    #4285f4 0%,
-    #ea4335 33%,
-    #fbbc04 66%,
-    #34a853 100%
-  );
-  background-size: 200% 200%;
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }
 
 /* 24-column grid for hour scrubber */
@@ -85,35 +59,11 @@ body {
   grid-template-columns: repeat(24, minmax(0, 1fr));
 }
 
-/* Google Material 3 Surface Containers */
-.m3-surface {
-  background-color: #202124;
-  border: 1px solid #3c4043;
+/* Subtle architectural dot grid */
+.bg-grid-pattern {
+  background-image: radial-gradient(rgba(100, 116, 139, 0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
-
-.m3-surface-low {
-  background-color: #18191c;
-  border: 1px solid #303134;
-}
-
-.m3-surface-high {
-  background-color: #28292c;
-  border: 1px solid #444746;
-}
-
-.m3-chip {
-  background-color: #202124;
-  border: 1px solid #3c4043;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
-}
-
-.m3-chip:hover {
-  background-color: #303134;
-  border-color: #8ab4f8;
-}
-
-/* Google Subtle Dot Mesh Scrim */
-.bg-google-grid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 24px 24px;
+.dark .bg-grid-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 }

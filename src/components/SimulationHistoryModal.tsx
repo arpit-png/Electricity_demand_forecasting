@@ -8,7 +8,7 @@ import {
 } from "@/lib/firebase";
 import { ScenarioParams, GridSummary } from "@/lib/forecasting-engine";
 import { formatMW } from "@/lib/utils";
-import { Database, Save, RotateCcw, CheckCircle, Clock, X, Cloud, ShieldCheck } from "lucide-react";
+import { Database, Save, RotateCcw, CheckCircle, Clock, X } from "lucide-react";
 
 interface SimulationHistoryModalProps {
   isOpen: boolean;
@@ -56,7 +56,7 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
         scenarioParams: currentParams,
         summary: currentSummary,
         notes: simNotes.trim() || undefined,
-        author: "Google Cloud Grid Controller",
+        author: "Grid Control System",
       });
 
       setSaveSuccess(true);
@@ -74,29 +74,26 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-2xl border border-[#3c4043] bg-[#202124] shadow-2xl flex flex-col font-sans text-xs">
-        {/* Google 4-Color Strip */}
-        <div className="h-[3px] w-full google-brand-bar" />
-
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-2xl border shadow-2xl flex flex-col text-xs bg-white border-slate-200 text-slate-900 dark:bg-[#111827] dark:border-slate-800 dark:text-slate-100">
         {/* Header */}
-        <div className="p-4 border-b border-[#3c4043] flex items-center justify-between bg-[#18191c]">
+        <div className="p-4 border-b flex items-center justify-between border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900">
           <div className="flex items-center gap-2">
-            <Database className="w-4 h-4 text-[#fbbc04]" />
-            <h3 className="text-sm font-semibold text-[#e8eaed] font-sans">Google Cloud Firestore Simulation Vault</h3>
+            <Database className="w-4 h-4 text-amber-500" />
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Simulation History &amp; Scenario Vault</h3>
             <span
-              className={`px-2.5 py-0.5 rounded-full text-[10px] font-sans font-medium border ${
+              className={`px-2.5 py-0.5 rounded-full text-[10px] font-medium border ${
                 source === "firestore"
-                  ? "bg-[#0d2818] text-[#81c995] border-[#81c995]/40"
-                  : "bg-[#1b2b44] text-[#8ab4f8] border-[#8ab4f8]/40"
+                  ? "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-400 dark:border-emerald-800"
+                  : "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/60 dark:text-blue-400 dark:border-blue-800"
               }`}
             >
-              {source === "firestore" ? "⚡ Cloud Firestore Sync: Live" : "💾 Local Store + Firestore Fallback Active"}
+              {source === "firestore" ? "⚡ Cloud Database: Synchronized" : "💾 Resilient Local Storage: Active"}
             </span>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full text-[#9aa0a6] hover:text-white hover:bg-[#303134] transition-colors"
+            className="p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 dark:hover:text-white dark:hover:bg-slate-800 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -105,15 +102,15 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
         {/* Content Body */}
         <div className="p-5 overflow-y-auto space-y-6">
           {/* Save Current Simulation Form */}
-          <form onSubmit={handleSave} className="p-4 rounded-xl bg-[#18191c] border border-[#3c4043] space-y-3">
+          <form onSubmit={handleSave} className="p-4 rounded-xl border space-y-3 bg-slate-50 border-slate-200 dark:bg-slate-900/60 dark:border-slate-800">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-xs text-[#e8eaed] flex items-center gap-1.5">
-                <Save className="w-3.5 h-3.5 text-[#8ab4f8]" />
-                Commit Current Grid Scenario to Cloud Database
+              <span className="font-semibold text-xs text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                <Save className="w-3.5 h-3.5 text-blue-500" />
+                Commit Current Grid Scenario to Database
               </span>
               {saveSuccess && (
-                <span className="text-[#81c995] flex items-center gap-1 text-[11px] font-sans font-medium">
-                  <CheckCircle className="w-3 h-3" /> Successfully committed!
+                <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1 text-[11px] font-medium">
+                  <CheckCircle className="w-3 h-3" /> Successfully saved!
                 </span>
               )}
             </div>
@@ -121,44 +118,44 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <input
                 type="text"
-                placeholder="Scenario Name (e.g., 2026 CAISO July Heatwave #4)"
+                placeholder="Scenario Name (e.g., July Peak Heatwave #2)"
                 value={simName}
                 onChange={(e) => setSimName(e.target.value)}
                 required
-                className="w-full px-3 py-2 rounded-lg bg-[#202124] border border-[#3c4043] text-[#e8eaed] placeholder-[#9aa0a6] text-xs focus:outline-none focus:border-[#8ab4f8]"
+                className="w-full px-3 py-2 rounded-lg border text-xs focus:outline-none focus:border-blue-500 bg-white border-slate-200 text-slate-900 placeholder-slate-400 dark:bg-slate-800 dark:border-slate-700 dark:text-white dark:placeholder-slate-500"
               />
               <input
                 type="text"
                 placeholder="Optional Notes / Dispatch Strategy"
                 value={simNotes}
                 onChange={(e) => setSimNotes(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg bg-[#202124] border border-[#3c4043] text-[#e8eaed] placeholder-[#9aa0a6] text-xs focus:outline-none focus:border-[#8ab4f8]"
+                className="w-full px-3 py-2 rounded-lg border text-xs focus:outline-none focus:border-blue-500 bg-white border-slate-200 text-slate-900 placeholder-slate-400 dark:bg-slate-800 dark:border-slate-700 dark:text-white dark:placeholder-slate-500"
               />
             </div>
 
             <div className="flex items-center justify-between pt-1">
-              <div className="text-[11px] text-[#9aa0a6]">
+              <div className="text-[11px] text-slate-500 dark:text-slate-400">
                 Params: {paramsSummary(currentParams)}
               </div>
               <button
                 type="submit"
                 disabled={isSaving}
-                className="px-4 py-2 rounded-full font-sans font-semibold text-xs bg-[#1a73e8] hover:bg-[#1557b0] text-white disabled:opacity-50 transition-colors shadow-sm"
+                className="px-4 py-2 rounded-full font-semibold text-xs bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 transition-colors shadow-sm"
               >
-                {isSaving ? "Persisting..." : "Save Snapshot"}
+                {isSaving ? "Saving..." : "Save Snapshot"}
               </button>
             </div>
           </form>
 
           {/* Stored Simulations List */}
           <div>
-            <h4 className="text-xs font-sans uppercase text-[#9aa0a6] font-medium tracking-wider mb-3 flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-[#8ab4f8]" />
+            <h4 className="text-xs uppercase text-slate-500 dark:text-slate-400 font-medium tracking-wider mb-3 flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-blue-500" />
               Historical Grid Runs ({simulations.length})
             </h4>
 
             {simulations.length === 0 ? (
-              <div className="p-8 text-center text-[#9aa0a6] rounded-xl bg-[#18191c] border border-[#3c4043]">
+              <div className="p-8 text-center text-slate-500 dark:text-slate-400 rounded-xl border bg-slate-50 border-slate-200 dark:bg-slate-900 dark:border-slate-800">
                 No historical simulations committed yet. Tune parameters and commit your first snapshot above!
               </div>
             ) : (
@@ -166,24 +163,24 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
                 {simulations.map((sim) => (
                   <div
                     key={sim.id}
-                    className="p-3.5 rounded-xl bg-[#18191c] border border-[#3c4043] hover:border-[#8ab4f8]/50 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+                    className="p-3.5 rounded-xl border transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-slate-50 border-slate-200 hover:border-blue-300 dark:bg-slate-900 dark:border-slate-800 dark:hover:border-slate-700"
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-sm text-[#e8eaed]">{sim.name}</span>
-                        <span className="text-[10px] text-[#9aa0a6] font-mono">
+                        <span className="font-semibold text-sm text-slate-900 dark:text-white">{sim.name}</span>
+                        <span className="text-[10px] text-slate-400 dark:text-slate-500 font-mono">
                           {new Date(sim.timestamp).toLocaleDateString()} {new Date(sim.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
                       {sim.notes && (
-                        <p className="text-[11px] text-[#9aa0a6] mt-0.5">{sim.notes}</p>
+                        <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">{sim.notes}</p>
                       )}
-                      <div className="flex flex-wrap items-center gap-2 mt-2 text-[10px] font-mono text-[#9aa0a6]">
-                        <span className="text-[#fdd663]">Solar: {(sim.scenarioParams.solarCapacityMW / 1000).toFixed(1)}GW</span>
+                      <div className="flex flex-wrap items-center gap-2 mt-2 text-[10px] font-mono text-slate-500 dark:text-slate-400">
+                        <span className="text-amber-600 dark:text-amber-400">Solar: {(sim.scenarioParams.solarCapacityMW / 1000).toFixed(1)}GW</span>
                         <span>•</span>
-                        <span className="text-[#81c995]">Wind: {(sim.scenarioParams.windCapacityMW / 1000).toFixed(1)}GW</span>
+                        <span className="text-emerald-600 dark:text-emerald-400">Wind: {(sim.scenarioParams.windCapacityMW / 1000).toFixed(1)}GW</span>
                         <span>•</span>
-                        <span className="text-[#f28b82]">3h Ramp: {formatMW(sim.summary.threeHourRampMW)}</span>
+                        <span className="text-rose-600 dark:text-rose-400">3h Ramp: {formatMW(sim.summary.threeHourRampMW)}</span>
                       </div>
                     </div>
 
@@ -192,9 +189,9 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
                         onLoadScenario(sim.scenarioParams);
                         onClose();
                       }}
-                      className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#202124] hover:bg-[#303134] text-[#8ab4f8] border border-[#3c4043] text-xs font-sans font-medium transition-colors self-end sm:self-center"
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-full border text-xs font-medium transition-colors bg-white hover:bg-slate-100 text-blue-600 border-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-blue-400 dark:border-slate-700 shadow-sm self-end sm:self-center"
                     >
-                      <RotateCcw className="w-3 h-3 text-[#8ab4f8]" />
+                      <RotateCcw className="w-3 h-3" />
                       <span>Restore</span>
                     </button>
                   </div>

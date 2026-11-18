@@ -8,7 +8,7 @@ import {
   GridSummary,
 } from "@/lib/forecasting-engine";
 import { formatMW, formatMWh } from "@/lib/utils";
-import { GoogleCloudHeader } from "@/components/google/GoogleCloudHeader";
+import { Navbar } from "@/components/Navbar";
 import { SkiperIsland } from "@/components/skiper-ui/skiper-island";
 import { SkiperTicker } from "@/components/skiper-ui/skiper-ticker";
 import { SkiperStatCard } from "@/components/skiper-ui/skiper-stat-card";
@@ -30,7 +30,6 @@ import {
   Flame,
   BatteryCharging,
   ShieldCheck,
-  CheckCircle2,
   Sparkles,
 } from "lucide-react";
 
@@ -52,7 +51,7 @@ export default function HomePage() {
 
   const handleQuickScenario = (key: keyof typeof DEFAULT_SCENARIOS) => {
     setParams(DEFAULT_SCENARIOS[key]);
-    showNotification(`Activated Vertex AI scenario preset: ${key.toUpperCase()}`);
+    showNotification(`Activated scenario preset: ${key.toUpperCase()}`);
   };
 
   const triggerEmergencyDispatch = () => {
@@ -81,17 +80,17 @@ export default function HomePage() {
   }, [forecast.summary, selectedHour]);
 
   return (
-    <div className="relative min-h-screen text-[#e8eaed] bg-[#131314] pb-32 overflow-x-hidden selection:bg-[#8ab4f8] selection:text-[#041e49] font-sans">
-      {/* Interactive Google 4-Color Ambient Fluid Canvas */}
-      <SkiperFluidCanvas mode={fluidMode} intensity={0.85} />
+    <div className="relative min-h-screen text-foreground bg-background pb-32 overflow-x-hidden transition-colors duration-300 font-sans">
+      {/* Interactive Fluid Background Canvas */}
+      <SkiperFluidCanvas mode={fluidMode} intensity={0.65} />
 
-      {/* Google Cloud Enterprise Header */}
-      <GoogleCloudHeader
+      {/* Main Navigation Bar with Smooth Theme Toggle */}
+      <Navbar
         onOpenHistory={() => setIsHistoryModalOpen(true)}
         frequencyHz={50.0}
       />
 
-      {/* Google Material 3 Dynamic Island HUD */}
+      {/* Dynamic Telemetry HUD */}
       <SkiperIsland
         status={forecast.summary.overallStatus}
         threeHourRampMW={forecast.summary.threeHourRampMW}
@@ -103,61 +102,61 @@ export default function HomePage() {
 
       {/* Floating Notification Toast */}
       {notification && (
-        <div className="fixed bottom-24 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#202124]/95 border border-[#8ab4f8]/40 text-[#8ab4f8] text-xs font-sans font-medium shadow-2xl backdrop-blur-2xl">
-          <Sparkles className="w-4 h-4 text-[#8ab4f8]" />
+        <div className="fixed bottom-24 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full shadow-2xl backdrop-blur-2xl border text-xs font-medium bg-white/90 border-slate-200 text-slate-800 dark:bg-slate-900/90 dark:border-slate-800 dark:text-slate-100">
+          <Sparkles className="w-4 h-4 text-blue-500" />
           <span>{notification}</span>
         </div>
       )}
 
-      {/* Top BigQuery & Vertex AI Telemetry Ticker Marquee */}
+      {/* Real-Time Telemetry Ticker Marquee */}
       <div>
         <SkiperTicker />
       </div>
 
       {/* Main Container */}
-      <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-12 relative z-10">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-12 relative z-10">
         {/* Hero Section */}
         <section className="relative pt-4 pb-2">
           <div className="flex flex-col items-start gap-4">
-            {/* Google Cloud System Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#202124] border border-[#3c4043] text-xs font-sans font-medium text-[#e8eaed] shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#34a853] shadow-[0_0_8px_#34a853]" />
-              <span className="text-[#8ab4f8]">GOOGLE CLOUD PLATFORM</span>
-              <span className="text-[#5f6368]">|</span>
-              <span className="text-[#e8eaed]">VERTEX AI NET DEMAND ENGINE</span>
-              <span className="text-[#5f6368]">|</span>
-              <span className="text-[#81c995]">IEEE 1547 COMPLIANT</span>
+            {/* System Status Badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-medium shadow-sm bg-slate-100 border-slate-200 text-slate-700 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+              <span className="font-semibold text-blue-600 dark:text-blue-400">TRANSMISSION GRID ANALYTICS</span>
+              <span className="text-slate-300 dark:text-slate-700">|</span>
+              <span>NET DEMAND FORECASTING ENGINE</span>
+              <span className="text-slate-300 dark:text-slate-700">|</span>
+              <span className="text-emerald-600 dark:text-emerald-400 font-medium">IEEE 1547 COMPLIANT</span>
             </div>
 
             {/* Title */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#e8eaed] max-w-4xl font-sans leading-[1.15]">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white max-w-4xl leading-[1.15]">
               Electricity Demand Forecasting Using Machine Learning
             </h1>
 
-            {/* Universal Problem & Mathematical Solution Statement */}
-            <p className="text-sm sm:text-base text-[#9aa0a6] max-w-3xl font-sans leading-relaxed">
-              Traditional electric infrastructure struggles with the <strong className="text-[#fdd663]">"Duck Curve"</strong>—the rapid fluctuation in net generation caused by decentralized solar and wind energy. When solar generation drops off sharply in the evening just as household demand surges, the grid faces sudden power shortages and blackout risks. Instead of predicting gross consumption, this Google Cloud pipeline forecasts <strong className="text-white">Net Demand (Gross Demand minus Solar/Wind Generation)</strong> using <strong className="text-[#c58af9]">DeepMind Bidirectional LSTM</strong>, <strong className="text-[#8ab4f8]">Vertex AI Boosted Trees (XGBoost)</strong>, and <strong className="text-[#fdd663]">TensorFlow Ridge Regression</strong> to accurately predict when the transmission grid requires backup power.
+            {/* Universal Problem & Solution Statement */}
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed">
+              Traditional electrical grids struggle with the <strong className="text-amber-600 dark:text-amber-400">"Duck Curve"</strong>—the rapid fluctuation in net generation caused by decentralized solar and wind energy. When solar generation drops off sharply in the evening just as household demand surges, the grid faces sudden power shortages and blackout risks. Instead of predicting gross consumption, this pipeline forecasts <strong className="text-slate-900 dark:text-white">Net Demand (Gross Demand minus Solar/Wind Generation)</strong> using <strong className="text-violet-600 dark:text-violet-400">Bidirectional LSTM Neural Networks</strong>, <strong className="text-blue-600 dark:text-blue-400">Gradient Boosted Trees (XGBoost)</strong>, and <strong className="text-amber-600 dark:text-amber-400">Time-Series Regression</strong> to accurately predict when the grid requires backup power.
             </p>
 
-            {/* Google Material 3 Hero Action Buttons */}
+            {/* Hero Action Buttons */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 onClick={() => {
                   const el = document.getElementById("visualizer");
                   el?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1a73e8] hover:bg-[#1557b0] text-white font-sans font-semibold text-xs tracking-tight transition-all duration-200 shadow-sm"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs tracking-tight transition-all duration-200 shadow-md active:scale-95"
               >
-                <Zap className="w-4 h-4 text-[#fdd663]" />
+                <Zap className="w-4 h-4 text-amber-300" />
                 <span>Inspect 24h Duck Curve</span>
               </button>
 
               <button
                 onClick={() => setIsHistoryModalOpen(true)}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#202124] hover:bg-[#303134] text-[#e8eaed] border border-[#3c4043] font-sans font-medium text-xs tracking-tight transition-all duration-200"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full border text-xs font-medium tracking-tight transition-all duration-200 shadow-sm bg-white hover:bg-slate-100 text-slate-800 border-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-200 dark:border-slate-800"
               >
-                <Database className="w-4 h-4 text-[#fbbc04]" />
-                <span>Cloud Firestore Vault</span>
+                <Database className="w-4 h-4 text-amber-500" />
+                <span>Scenario Database Vault</span>
               </button>
 
               <button
@@ -165,24 +164,24 @@ export default function HomePage() {
                   const el = document.getElementById("models");
                   el?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#202124] hover:bg-[#303134] text-[#e8eaed] border border-[#3c4043] font-sans font-medium text-xs tracking-tight transition-all duration-200"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full border text-xs font-medium tracking-tight transition-all duration-200 shadow-sm bg-white hover:bg-slate-100 text-slate-800 border-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-200 dark:border-slate-800"
               >
-                <Cpu className="w-4 h-4 text-[#8ab4f8]" />
-                <span>Vertex AI Benchmarks</span>
+                <Cpu className="w-4 h-4 text-violet-500" />
+                <span>ML Model Benchmarks</span>
               </button>
 
               <button
                 onClick={triggerEmergencyDispatch}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0d2818] hover:bg-[#143a24] text-[#81c995] border border-[#81c995]/30 font-sans font-medium text-xs tracking-tight transition-all duration-200"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full border text-xs font-medium tracking-tight transition-all duration-200 shadow-sm bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:hover:bg-emerald-900 dark:text-emerald-300 dark:border-emerald-800"
               >
-                <BatteryCharging className="w-4 h-4 text-[#81c995]" />
+                <BatteryCharging className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>Emergency Dispatch (+2 GW BESS)</span>
               </button>
             </div>
           </div>
 
           {/* Real-Time Telemetry Counters */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pt-6 border-t border-[#3c4043]">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
             <SkiperStatCard
               label="Peak Gross Consumption"
               value={formatMW(forecast.summary.peakGrossDemand)}
@@ -190,18 +189,18 @@ export default function HomePage() {
               trend="neutral"
               trendLabel="Total Transmission Load"
               variant="blue"
-              icon={<Zap className="w-4 h-4 text-[#8ab4f8]" />}
-              badge="BigQuery"
+              icon={<Zap className="w-4 h-4" />}
+              badge="Total Load"
             />
 
             <SkiperStatCard
-              label="Solar Belly (Min Net Load)"
+              label="Duck Belly (Min Net Load)"
               value={formatMW(forecast.summary.minNetDemand)}
               subValue={`at ${forecast.summary.minNetHour}`}
               trend="warning"
               trendLabel="Midday Solar Influx"
               variant="warning"
-              icon={<Sun className="w-4 h-4 text-[#fbbc04]" />}
+              icon={<Sun className="w-4 h-4" />}
               badge="Overgeneration"
             />
 
@@ -212,7 +211,7 @@ export default function HomePage() {
               trend={forecast.summary.threeHourRampMW > 9000 ? "up" : "warning"}
               trendLabel={forecast.summary.threeHourRampMW > 9000 ? "CRITICAL RAMP" : "Moderate Slope"}
               variant={forecast.summary.threeHourRampMW > 9000 ? "critical" : "warning"}
-              icon={<AlertTriangle className="w-4 h-4 text-[#ea4335]" />}
+              icon={<AlertTriangle className="w-4 h-4" />}
               badge="Peak Gradient"
             />
 
@@ -223,7 +222,7 @@ export default function HomePage() {
               trend={forecast.summary.backupPowerNeededMW > 0 ? "up" : "down"}
               trendLabel={forecast.summary.backupPowerNeededMW > 0 ? "Spooling Required" : "Zero Margin Deficit"}
               variant={forecast.summary.backupPowerNeededMW > 0 ? "critical" : "success"}
-              icon={<Flame className="w-4 h-4 text-[#ea4335]" />}
+              icon={<Flame className="w-4 h-4" />}
               badge="Grid Security"
             />
           </div>
@@ -242,14 +241,14 @@ export default function HomePage() {
         {/* Interactive Split Comparison Slider */}
         <section className="col-span-12">
           <div className="mb-3">
-            <span className="text-xs font-sans font-medium text-[#8ab4f8] uppercase tracking-wide">
+            <span className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wide">
               INTERACTIVE GRID COMPARISON
             </span>
-            <h3 className="text-xl font-bold font-sans text-[#e8eaed]">
-              Unmitigated Duck Curve vs. Vertex AI Pre-Dispatch Stabilization
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+              Unmitigated Duck Curve vs. Machine Learning Pre-Dispatch Stabilization
             </h3>
-            <p className="text-xs text-[#9aa0a6] font-sans">
-              Drag the split slider to observe how proactive 3-hour machine learning forecasting shaves the evening ramp and prevents grid instability.
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Drag the split slider to observe how proactive 3-hour forecasting shaves the evening ramp and prevents grid instability.
             </p>
           </div>
           <SkiperComparisonSlider />
@@ -281,7 +280,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      {/* Floating Google Material 3 Action Dock */}
+      {/* Floating Interactive Dock */}
       <SkiperDock onOpenVault={() => setIsHistoryModalOpen(true)} />
 
       {/* Database History Modal */}
@@ -292,30 +291,30 @@ export default function HomePage() {
         currentSummary={forecast.summary}
         onLoadScenario={(newParams) => {
           setParams(newParams);
-          showNotification("Restored scenario from Google Cloud database archive!");
+          showNotification("Restored scenario from database archive!");
         }}
       />
 
-      {/* Google Cloud Enterprise Footer */}
-      <footer className="mt-20 border-t border-[#3c4043] py-10 text-xs font-sans text-[#9aa0a6] text-center max-w-[1400px] mx-auto px-4">
+      {/* Institutional Clean Footer */}
+      <footer className="mt-20 border-t border-slate-200 dark:border-slate-800 py-10 text-xs text-slate-500 dark:text-slate-400 text-center max-w-7xl mx-auto px-4">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-[#e8eaed]">
-            <span className="w-2 h-2 rounded-full bg-[#4285f4]" />
-            <span className="font-medium font-sans">Google Cloud Platform • Electricity Net Demand Forecasting Engine</span>
+          <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+            <span className="w-2 h-2 rounded-full bg-blue-500" />
+            <span className="font-medium">Electricity Net Demand Forecasting &amp; Duck Curve Intelligence Platform</span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 text-[#9aa0a6] font-sans">
-            <span>Google Cloud BigQuery</span>
+          <div className="flex flex-wrap items-center gap-3">
+            <span>Time-Series Forecasting</span>
             <span>•</span>
-            <span>Vertex AI (Bi-LSTM & XGBoost)</span>
+            <span>Bidirectional LSTM</span>
             <span>•</span>
-            <span>Cloud Firestore</span>
+            <span>Gradient Boosted Trees</span>
             <span>•</span>
             <span>IEEE 1547 Standards</span>
           </div>
 
-          <div className="text-[11px] text-[#9aa0a6] font-mono">
-            Vercel Edge Ready • Production Deployed
+          <div className="text-[11px] font-mono">
+            Production Vercel Ready • Resilient Database Vault
           </div>
         </div>
       </footer>
