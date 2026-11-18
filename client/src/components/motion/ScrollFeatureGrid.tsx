@@ -12,7 +12,7 @@ export const ScrollFeatureGrid: React.FC = () => {
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray<HTMLElement>(".feature-card");
 
-      cards.forEach((card, i) => {
+      cards.forEach((card) => {
         gsap.fromTo(
           card,
           {
