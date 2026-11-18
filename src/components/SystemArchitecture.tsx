@@ -3,7 +3,7 @@
 import React from "react";
 import { BentoCard } from "./skiper-ui/skiper-bento-grid";
 import { HourlyDataPoint } from "@/lib/forecasting-engine";
-import { FileText, Download, Code2, Layers, Cpu, ShieldCheck, Database, GitBranch } from "lucide-react";
+import { Download, Code2, Layers, Cpu, ShieldCheck, Database, GitBranch } from "lucide-react";
 import { SkiperMagneticButton } from "./skiper-ui/skiper-magnetic-button";
 
 interface SystemArchitectureProps {
@@ -111,7 +111,7 @@ export const SystemArchitecture: React.FC<SystemArchitectureProps> = ({ data }) 
 
   return (
     <BentoCard
-      glowColor="cyan"
+      glowColor="gold"
       badge="SYSTEM ARCHITECTURE & GOVERNANCE"
       title="Transmission Grid Net Demand Pipeline Specification"
       subtitle="Production time-series machine learning system engineered for rapid-ramp detection and proactive reserve synchronization."
@@ -124,17 +124,17 @@ export const SystemArchitecture: React.FC<SystemArchitectureProps> = ({ data }) 
           return (
             <div
               key={i}
-              className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-blue-500/30 transition-all flex flex-col justify-between"
+              className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.14] transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-mono text-blue-300 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">
+                  <span className="text-[10px] font-mono text-[#d4af37] bg-[#221e14] px-2 py-0.5 rounded border border-[#d4af37]/25">
                     {layer.badge}
                   </span>
-                  <Icon className="w-3.5 h-3.5 text-blue-400" />
+                  <Icon className="w-3.5 h-3.5 text-[#d4af37]" />
                 </div>
-                <h4 className="text-sm font-bold text-white tracking-tight">{layer.title}</h4>
-                <p className="text-[11px] text-slate-400 mt-2 leading-relaxed">{layer.desc}</p>
+                <h4 className="text-sm font-semibold text-zinc-100 tracking-tight">{layer.title}</h4>
+                <p className="text-[11px] text-zinc-400 mt-2 leading-relaxed">{layer.desc}</p>
               </div>
             </div>
           );
@@ -144,20 +144,20 @@ export const SystemArchitecture: React.FC<SystemArchitectureProps> = ({ data }) 
       {/* Mathematical Formulation and Export Tools */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] text-xs font-mono">
         <div className="lg:col-span-2 space-y-3">
-          <div className="flex items-center gap-2 text-white font-semibold text-sm">
-            <Layers className="w-4 h-4 text-blue-400" />
+          <div className="flex items-center gap-2 text-zinc-100 font-semibold text-sm">
+            <Layers className="w-4 h-4 text-[#d4af37]" />
             <span>Mathematical Net Demand & Ramp Formulation</span>
           </div>
-          <p className="text-slate-300 leading-relaxed text-[11px]">
+          <p className="text-zinc-300 leading-relaxed text-[11px]">
             Decentralized variable renewable energy (VRE) fundamentally disrupts traditional load profiles. While standard dispatch pipelines forecast gross consumption alone, transmission system operators require continuous forecasting of <strong>Net Demand</strong> to prevent evening blackouts:
           </p>
-          <div className="p-3 rounded-xl bg-slate-950/90 border border-blue-500/30 text-blue-300 font-mono text-[11px] select-all">
+          <div className="p-3 rounded-xl bg-[#08080c] border border-white/10 text-[#d4af37] font-mono text-[11px] select-all">
             NetDemand(t) = GrossDemand(t) - [ SolarPV(t) &times; &alpha;_cloud + WindGeneration(t) ]
           </div>
-          <div className="p-3 rounded-xl bg-slate-950/90 border border-amber-500/30 text-amber-300 font-mono text-[11px] select-all">
+          <div className="p-3 rounded-xl bg-[#08080c] border border-white/10 text-[#e5c268] font-mono text-[11px] select-all">
             RampRate(t) = NetDemand(t) - NetDemand(t - 1) &nbsp;&nbsp;|&nbsp;&nbsp; 3hRamp = NetDemand(20:00) - NetDemand(17:00)
           </div>
-          <p className="text-slate-400 leading-relaxed text-[11px]">
+          <p className="text-zinc-400 leading-relaxed text-[11px]">
             When the 3-hour evening ramp rate exceeds the threshold of <strong>+9,000 MW</strong>, simple-cycle combustion turbines (SCCT) and Battery Energy Storage Systems (BESS) are dispatched automatically based on model lookahead inferences.
           </p>
         </div>
@@ -165,11 +165,11 @@ export const SystemArchitecture: React.FC<SystemArchitectureProps> = ({ data }) 
         {/* Data & Model Export Tools */}
         <div className="border-t lg:border-t-0 lg:border-l border-white/[0.08] lg:pl-6 pt-4 lg:pt-0 flex flex-col justify-between">
           <div>
-            <div className="flex items-center gap-2 text-white font-semibold text-sm mb-3">
-              <Download className="w-4 h-4 text-emerald-400" />
+            <div className="flex items-center gap-2 text-zinc-100 font-semibold text-sm mb-3">
+              <Download className="w-4 h-4 text-[#5a9a7c]" />
               <span>Telemetry Data Export</span>
             </div>
-            <p className="text-[11px] text-slate-400 leading-relaxed mb-4">
+            <p className="text-[11px] text-zinc-400 leading-relaxed mb-4">
               Export the current 24-hour synthesized time-series dataset including ground truth, model predictions, ramp velocities, and dispatch logs.
             </p>
           </div>
@@ -180,7 +180,7 @@ export const SystemArchitecture: React.FC<SystemArchitectureProps> = ({ data }) 
               variant="secondary"
               size="sm"
               className="w-full justify-center"
-              icon={<Download className="w-3.5 h-3.5 text-blue-400" />}
+              icon={<Download className="w-3.5 h-3.5 text-[#d4af37]" />}
             >
               Export Telemetry as CSV
             </SkiperMagneticButton>
@@ -190,7 +190,7 @@ export const SystemArchitecture: React.FC<SystemArchitectureProps> = ({ data }) 
               variant="secondary"
               size="sm"
               className="w-full justify-center"
-              icon={<Code2 className="w-3.5 h-3.5 text-emerald-400" />}
+              icon={<Code2 className="w-3.5 h-3.5 text-[#5a9a7c]" />}
             >
               Export Raw JSON Payload
             </SkiperMagneticButton>

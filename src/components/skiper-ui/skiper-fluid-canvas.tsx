@@ -9,7 +9,7 @@ interface SkiperFluidCanvasProps {
 
 export const SkiperFluidCanvas: React.FC<SkiperFluidCanvasProps> = ({
   mode = "normal",
-  intensity = 1.0,
+  intensity = 0.8,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -38,44 +38,44 @@ export const SkiperFluidCanvas: React.FC<SkiperFluidCanvasProps> = ({
     };
     window.addEventListener("mousemove", handleMouseMove);
 
-    // Color pallets by grid status
+    // Quiet luxury palette: brushed champagne, smoked steel slate, muted copper terracotta, celadon sage
     const palette = {
       normal: {
-        glow1: "rgba(59, 130, 246, 0.08)", // Electric Tungsten Blue
-        glow2: "rgba(245, 158, 11, 0.05)", // Warm Amber
-        accent: "rgba(16, 185, 129, 0.04)",
+        glow1: "rgba(120, 140, 160, 0.045)", // Smoked Steel Slate
+        glow2: "rgba(212, 175, 55, 0.035)",  // Brushed Champagne Gold
+        accent: "rgba(90, 154, 124, 0.025)", // Celadon Sage
       },
       ramp: {
-        glow1: "rgba(244, 63, 94, 0.12)",  // Magma Crimson
-        glow2: "rgba(245, 158, 11, 0.09)", // Warning Amber
-        accent: "rgba(225, 29, 72, 0.06)",
+        glow1: "rgba(200, 103, 84, 0.06)",   // Smoked Terracotta / Muted Copper
+        glow2: "rgba(212, 175, 55, 0.04)",   // Champagne Gold
+        accent: "rgba(160, 70, 60, 0.03)",
       },
       solar: {
-        glow1: "rgba(245, 158, 11, 0.12)", // Sodium Solar Gold
-        glow2: "rgba(251, 191, 36, 0.08)",
-        accent: "rgba(59, 130, 246, 0.04)",
+        glow1: "rgba(212, 175, 55, 0.06)",   // Brushed Champagne Gold
+        glow2: "rgba(230, 204, 160, 0.035)", // Pale Warm Ochre
+        accent: "rgba(120, 140, 160, 0.025)",
       },
       battery: {
-        glow1: "rgba(16, 185, 129, 0.10)", // Hyper-Kinetic Mint/Emerald
-        glow2: "rgba(6, 182, 212, 0.08)",
-        accent: "rgba(52, 211, 153, 0.05)",
+        glow1: "rgba(90, 154, 124, 0.05)",   // Celadon Sage
+        glow2: "rgba(120, 140, 160, 0.04)",  // Smoked Slate
+        accent: "rgba(100, 160, 135, 0.025)",
       },
     }[mode];
 
     let t = 0;
     const render = () => {
-      t += 0.008 * intensity;
+      t += 0.005 * intensity;
 
-      // Smooth mouse lerp
-      mouse.x += (mouse.targetX - mouse.x) * 0.05;
-      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+      // Smooth mouse damping
+      mouse.x += (mouse.targetX - mouse.x) * 0.04;
+      mouse.y += (mouse.targetY - mouse.y) * 0.04;
 
       ctx.clearRect(0, 0, width, height);
 
-      // Primary fluid orb 1
-      const orb1X = width * 0.35 + Math.sin(t * 0.7) * 180 + (mouse.x - width * 0.5) * 0.15;
-      const orb1Y = height * 0.3 + Math.cos(t * 0.5) * 120 + (mouse.y - height * 0.5) * 0.15;
-      const grad1 = ctx.createRadialGradient(orb1X, orb1Y, 40, orb1X, orb1Y, width * 0.55);
+      // Primary fluid orb
+      const orb1X = width * 0.4 + Math.sin(t * 0.6) * 140 + (mouse.x - width * 0.5) * 0.1;
+      const orb1Y = height * 0.35 + Math.cos(t * 0.5) * 90 + (mouse.y - height * 0.5) * 0.1;
+      const grad1 = ctx.createRadialGradient(orb1X, orb1Y, 50, orb1X, orb1Y, width * 0.55);
       grad1.addColorStop(0, palette.glow1);
       grad1.addColorStop(0.5, palette.accent);
       grad1.addColorStop(1, "transparent");
@@ -85,10 +85,10 @@ export const SkiperFluidCanvas: React.FC<SkiperFluidCanvasProps> = ({
       ctx.arc(orb1X, orb1Y, width * 0.55, 0, Math.PI * 2);
       ctx.fill();
 
-      // Secondary fluid orb 2
-      const orb2X = width * 0.7 + Math.cos(t * 0.6) * 160 - (mouse.x - width * 0.5) * 0.12;
-      const orb2Y = height * 0.65 + Math.sin(t * 0.8) * 140 - (mouse.y - height * 0.5) * 0.12;
-      const grad2 = ctx.createRadialGradient(orb2X, orb2Y, 30, orb2X, orb2Y, width * 0.5);
+      // Secondary fluid orb
+      const orb2X = width * 0.65 + Math.cos(t * 0.55) * 120 - (mouse.x - width * 0.5) * 0.08;
+      const orb2Y = height * 0.6 + Math.sin(t * 0.7) * 100 - (mouse.y - height * 0.5) * 0.08;
+      const grad2 = ctx.createRadialGradient(orb2X, orb2Y, 40, orb2X, orb2Y, width * 0.5);
       grad2.addColorStop(0, palette.glow2);
       grad2.addColorStop(0.6, palette.glow1);
       grad2.addColorStop(1, "transparent");
@@ -96,15 +96,6 @@ export const SkiperFluidCanvas: React.FC<SkiperFluidCanvasProps> = ({
       ctx.fillStyle = grad2;
       ctx.beginPath();
       ctx.arc(orb2X, orb2Y, width * 0.5, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Interactive cursor ripple
-      const cursorGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 280);
-      cursorGrad.addColorStop(0, palette.glow1);
-      cursorGrad.addColorStop(1, "transparent");
-      ctx.fillStyle = cursorGrad;
-      ctx.beginPath();
-      ctx.arc(mouse.x, mouse.y, 280, 0, Math.PI * 2);
       ctx.fill();
 
       animationFrameId = requestAnimationFrame(render);
@@ -122,7 +113,7 @@ export const SkiperFluidCanvas: React.FC<SkiperFluidCanvasProps> = ({
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-0 opacity-70 transition-opacity duration-1000"
+      className="pointer-events-none fixed inset-0 z-0 opacity-80 transition-opacity duration-1000"
     />
   );
 };

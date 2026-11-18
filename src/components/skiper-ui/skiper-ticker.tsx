@@ -2,7 +2,7 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Zap, ArrowUpRight, ArrowDownRight, Radio } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Radio } from "lucide-react";
 
 interface TickerItem {
   iso: string;
@@ -26,13 +26,13 @@ export const SkiperTicker: React.FC<{ className?: string }> = ({ className }) =>
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden border-y border-white/[0.06] bg-[#07090d]/80 py-2.5 backdrop-blur-md",
+        "relative w-full overflow-hidden border-y border-white/[0.06] bg-[#08080b]/90 py-2.5 backdrop-blur-xl",
         className
       )}
     >
       {/* Edge gradient masks */}
-      <div className="pointer-events-none absolute left-0 inset-y-0 w-24 bg-gradient-to-r from-[#07090d] to-transparent z-10" />
-      <div className="pointer-events-none absolute right-0 inset-y-0 w-24 bg-gradient-to-l from-[#07090d] to-transparent z-10" />
+      <div className="pointer-events-none absolute left-0 inset-y-0 w-24 bg-gradient-to-r from-[#08080b] to-transparent z-10" />
+      <div className="pointer-events-none absolute right-0 inset-y-0 w-24 bg-gradient-to-l from-[#08080b] to-transparent z-10" />
 
       <div className="flex w-max animate-ticker items-center gap-8">
         {[...SAMPLE_FEEDS, ...SAMPLE_FEEDS].map((item, idx) => {
@@ -42,50 +42,50 @@ export const SkiperTicker: React.FC<{ className?: string }> = ({ className }) =>
           return (
             <div
               key={idx}
-              className="flex items-center gap-3 font-mono text-xs text-slate-300"
+              className="flex items-center gap-3 font-mono text-xs text-zinc-300"
             >
-              <div className="flex items-center gap-1.5 font-semibold text-slate-100">
-                <Radio className="w-3 h-3 text-cyan-400 animate-pulse" />
+              <div className="flex items-center gap-1.5 font-medium text-zinc-200">
+                <Radio className="w-3 h-3 text-[#d4af37]" />
                 <span>{item.iso}</span>
               </div>
 
-              <div className="flex items-center gap-1 text-[11px] text-slate-400">
+              <div className="flex items-center gap-1 text-[11px] text-zinc-400">
                 <span>Gross:</span>
-                <span className="text-slate-200">{item.grossLoad}</span>
+                <span className="text-zinc-300">{item.grossLoad}</span>
               </div>
 
-              <div className="flex items-center gap-1 text-[11px] text-amber-400/90">
+              <div className="flex items-center gap-1 text-[11px] text-[#d4af37]">
                 <span>☀️ Solar:</span>
                 <span>{item.solar}</span>
               </div>
 
-              <div className="flex items-center gap-1 text-[11px] font-bold">
-                <span className="text-slate-400">Net:</span>
-                <span className={cn(isPeak ? "text-rose-400" : isRamping ? "text-amber-400" : "text-emerald-400")}>
+              <div className="flex items-center gap-1 text-[11px] font-semibold">
+                <span className="text-zinc-500">Net:</span>
+                <span className={cn(isPeak ? "text-[#e07563]" : isRamping ? "text-[#e5c268]" : "text-[#6aa88a]")}>
                   {item.netLoad}
                 </span>
                 {isPeak ? (
-                  <ArrowUpRight className="w-3 h-3 text-rose-400" />
+                  <ArrowUpRight className="w-3 h-3 text-[#e07563]" />
                 ) : (
-                  <ArrowDownRight className="w-3 h-3 text-slate-400" />
+                  <ArrowDownRight className="w-3 h-3 text-zinc-500" />
                 )}
               </div>
 
               <span
                 className={cn(
-                  "px-1.5 py-0.5 rounded text-[9px] uppercase font-bold tracking-wider",
+                  "px-1.5 py-0.5 rounded text-[9px] uppercase font-semibold tracking-wider border",
                   isPeak
-                    ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
+                    ? "bg-[#251715] text-[#e07563] border-[#c86754]/30"
                     : isRamping
-                    ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                    : "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                    ? "bg-[#211d14] text-[#e5c268] border-[#d4af37]/30"
+                    : "bg-[#141d18] text-[#5a9a7c] border-[#5a9a7c]/30"
                 )}
               >
                 {item.rampStatus}
               </span>
 
-              <span className="text-slate-500 text-[10px]">Freq: {item.frequency}</span>
-              <span className="text-slate-700 mx-2">•</span>
+              <span className="text-zinc-500 text-[10px]">Freq: {item.frequency}</span>
+              <span className="text-zinc-800 mx-2">•</span>
             </div>
           );
         })}

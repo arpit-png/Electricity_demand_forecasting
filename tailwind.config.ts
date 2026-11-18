@@ -10,59 +10,61 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: "#09090c",
+        foreground: "#f4f4f6",
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "#111115",
+          foreground: "#f4f4f6",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "#111115",
+          foreground: "#f4f4f6",
         },
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#d4af37", // Brushed Champagne Gold
+          foreground: "#09090c",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "#18181d",
+          foreground: "#e4e4e7",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "#1c1c22",
+          foreground: "#a1a1aa",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "#cfac62",
+          foreground: "#09090c",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+        border: "rgba(255, 255, 255, 0.08)",
+        luxury: {
+          gold: "#d4af37",
+          champagne: "#e6cca0",
+          bronze: "#b89758",
+          steel: "#788ca0",
+          terracotta: "#c86754",
+          sage: "#5a9a7c",
+          charcoal: "#121216",
+          graphite: "#18181e",
         },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
         grid: {
-          demand: "#06b6d4",
-          solar: "#f59e0b",
-          wind: "#38bdf8",
-          net: "#f43f5e",
-          battery: "#10b981",
-          lstm: "#a855f7",
-          gradient: "#ec4899",
+          demand: "#788ca0",     // Smoked Steel Slate
+          solar: "#d4af37",      // Brushed Champagne Gold
+          wind: "#9aa9b8",       // Mist Platinum
+          net: "#c86754",        // Smoked Terracotta
+          battery: "#5a9a7c",    // Celadon Sage
+          lstm: "#9d8ec2",       // Muted Iris
         },
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "-apple-system", "sans-serif"],
-        mono: ["var(--font-mono)", "monospace"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       animation: {
-        "shimmer": "shimmer 2.5s linear infinite",
-        "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "ticker": "ticker 35s linear infinite",
-        "float": "float 6s ease-in-out infinite",
-        "grid-scan": "gridScan 8s linear infinite",
+        "shimmer": "shimmer 3s linear infinite",
+        "pulse-slow": "pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "ticker": "ticker 40s linear infinite",
+        "float": "float 7s ease-in-out infinite",
       },
       keyframes: {
         shimmer: {
@@ -75,11 +77,7 @@ const config: Config = {
         },
         float: {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-8px)" },
-        },
-        gridScan: {
-          "0%": { backgroundPosition: "0% 0%" },
-          "100%": { backgroundPosition: "0% 100%" },
+          "50%": { transform: "translateY(-6px)" },
         },
       },
     },

@@ -26,15 +26,9 @@ import {
   Zap,
   Sun,
   AlertTriangle,
-  BatteryCharging,
   Cpu,
   Database,
-  ArrowRight,
-  TrendingDown,
-  ShieldAlert,
   Flame,
-  Award,
-  Layers,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -84,9 +78,9 @@ export default function HomePage() {
   }, [forecast.summary, selectedHour]);
 
   return (
-    <div className="relative min-h-screen text-slate-100 pb-32 overflow-x-hidden selection:bg-blue-600 selection:text-white">
+    <div className="relative min-h-screen text-zinc-100 pb-32 overflow-x-hidden selection:bg-[#d4af37] selection:text-[#09090c]">
       {/* Interactive Liquid / Glass Ambient Fluid Canvas */}
-      <SkiperFluidCanvas mode={fluidMode} intensity={1.1} />
+      <SkiperFluidCanvas mode={fluidMode} intensity={0.9} />
 
       {/* Skiper Floating Dynamic Island HUD */}
       <SkiperIsland
@@ -100,8 +94,8 @@ export default function HomePage() {
 
       {/* Floating Notification Toast */}
       {notification && (
-        <div className="fixed bottom-20 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-950/90 border border-blue-500/40 text-blue-200 text-xs font-mono shadow-2xl backdrop-blur-xl animate-bounce">
-          <Zap className="w-4 h-4 text-blue-400" />
+        <div className="fixed bottom-20 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#141419]/95 border border-[#d4af37]/30 text-[#e6cca0] text-xs font-mono shadow-2xl backdrop-blur-2xl">
+          <Zap className="w-3.5 h-3.5 text-[#d4af37]" />
           <span>{notification}</span>
         </div>
       )}
@@ -117,13 +111,13 @@ export default function HomePage() {
         <section className="relative pt-6 pb-4">
           <div className="flex flex-col items-start gap-4">
             {/* System Status Tag */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-xs font-mono text-blue-400">
-              <span className="w-2 h-2 rounded-full bg-blue-400 animate-ping" />
-              <span>TRANSMISSION SYSTEM ARCHITECTURE</span>
-              <span className="text-slate-600">|</span>
-              <span className="text-amber-300">NET DEMAND FORECASTING ENGINE</span>
-              <span className="text-slate-600">|</span>
-              <span className="text-emerald-400">IEEE 1547 COMPLIANT</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18181f]/80 border border-white/[0.08] text-xs font-mono text-zinc-300">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#d4af37] shadow-[0_0_6px_#d4af37]" />
+              <span className="text-[#e5c268]">TRANSMISSION SYSTEMS ARCHITECTURE</span>
+              <span className="text-zinc-600">|</span>
+              <span className="text-zinc-400">NET DEMAND FORECASTING PIPELINE</span>
+              <span className="text-zinc-600">|</span>
+              <span className="text-[#5a9a7c]">IEEE 1547 COMPLIANT</span>
             </div>
 
             {/* Title with Skiper Text Reveal */}
@@ -135,8 +129,8 @@ export default function HomePage() {
             </h1>
 
             {/* Universal Problem & Mathematical Solution Statement */}
-            <p className="text-sm sm:text-base text-slate-300 max-w-3xl font-mono leading-relaxed">
-              Traditional electrical infrastructure struggles with the <strong className="text-amber-400">"Duck Curve"</strong>—the rapid fluctuation in power availability caused by decentralized solar and wind energy. When renewable generation drops off sharply in the evening just as household demand spikes, the grid faces sudden power shortages. Instead of standard consumption, this pipeline forecasts <strong className="text-blue-400">Net Demand (Total Demand minus Renewable Generation)</strong> using <strong className="text-purple-400">LSTM Neural Networks</strong>, <strong className="text-sky-400">Gradient Boosting</strong>, and <strong className="text-amber-400">Time-Series Regression</strong> to accurately predict when the grid will need backup power.
+            <p className="text-sm sm:text-base text-zinc-400 max-w-3xl font-mono leading-relaxed">
+              Traditional electrical infrastructure struggles with the <strong className="text-[#e5c268]">"Duck Curve"</strong>—the rapid fluctuation in power availability caused by decentralized solar and wind energy. When renewable generation drops off sharply in the evening just as household demand spikes, the grid faces sudden power shortages. Instead of standard consumption, this pipeline forecasts <strong className="text-zinc-200">Net Demand (Total Demand minus Renewable Generation)</strong> using <strong className="text-[#9d8ec2]">LSTM Neural Networks</strong>, <strong className="text-[#8fa8c0]">Gradient Boosting</strong>, and <strong className="text-[#d1b181]">Time-Series Regression</strong> to accurately predict when the grid will need backup power.
             </p>
 
             {/* Hero Action Buttons */}
@@ -148,7 +142,7 @@ export default function HomePage() {
                 }}
                 variant="primary"
                 size="md"
-                icon={<Zap className="w-4 h-4 text-slate-950" />}
+                icon={<Zap className="w-4 h-4 text-zinc-950" />}
               >
                 Inspect 24h Duck Curve
               </SkiperMagneticButton>
@@ -157,7 +151,7 @@ export default function HomePage() {
                 onClick={() => setIsHistoryModalOpen(true)}
                 variant="secondary"
                 size="md"
-                icon={<Database className="w-4 h-4 text-blue-400" />}
+                icon={<Database className="w-4 h-4 text-[#d4af37]" />}
               >
                 Database Simulation Vault
               </SkiperMagneticButton>
@@ -169,7 +163,7 @@ export default function HomePage() {
                 }}
                 variant="secondary"
                 size="md"
-                icon={<Cpu className="w-4 h-4 text-purple-400" />}
+                icon={<Cpu className="w-4 h-4 text-[#9d8ec2]" />}
               >
                 Benchmarked ML Models
               </SkiperMagneticButton>
@@ -277,14 +271,14 @@ export default function HomePage() {
       />
 
       {/* Institutional Footer */}
-      <footer className="mt-20 border-t border-white/[0.08] py-10 text-xs font-mono text-slate-500 text-center max-w-7xl mx-auto px-4">
+      <footer className="mt-20 border-t border-white/[0.08] py-10 text-xs font-mono text-zinc-500 text-center max-w-7xl mx-auto px-4">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-slate-400">
-            <span className="w-2 h-2 rounded-full bg-blue-500" />
+          <div className="flex items-center gap-2 text-zinc-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#d4af37]" />
             <span>Electricity Demand Forecasting Using Machine Learning • System Telemetry</span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 text-slate-400">
+          <div className="flex flex-wrap items-center gap-3 text-zinc-400">
             <span>Time-Series Forecasting</span>
             <span>•</span>
             <span>Multivariate Regression</span>
@@ -294,7 +288,7 @@ export default function HomePage() {
             <span>Gradient Boosted Trees</span>
           </div>
 
-          <div className="text-[11px] text-slate-500">
+          <div className="text-[11px] text-zinc-500">
             Production Vercel Ready • Cloud Firestore Persistent
           </div>
         </div>

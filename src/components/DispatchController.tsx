@@ -4,7 +4,7 @@ import React from "react";
 import { GridSummary, HourlyDataPoint } from "@/lib/forecasting-engine";
 import { formatMW, formatMWh } from "@/lib/utils";
 import { BentoCard } from "./skiper-ui/skiper-bento-grid";
-import { ShieldAlert, Zap, BatteryCharging, AlertTriangle, Flame, Clock } from "lucide-react";
+import { ShieldAlert, Zap, AlertTriangle, Flame, Clock } from "lucide-react";
 import { SkiperMagneticButton } from "./skiper-ui/skiper-magnetic-button";
 
 interface DispatchControllerProps {
@@ -23,10 +23,10 @@ export const DispatchController: React.FC<DispatchControllerProps> = ({
 
   return (
     <BentoCard
-      glowColor={isCritical ? "rose" : isElevated ? "amber" : "emerald"}
+      glowColor={isCritical ? "terracotta" : isElevated ? "gold" : "sage"}
       badge="GRID RELIABILITY & DISPATCH ENGINE"
       title="Peaker Spool-Up & Blackout Prevention Controller"
-      subtitle="Automated dispatch decisions calculating rapid reserve requirements to absorb solar belly and supply evening neck."
+      subtitle="Automated reserve requirements to absorb solar belly and supply evening ramp neck."
       className="col-span-12 lg:col-span-4"
     >
       <div className="space-y-4 text-xs font-mono">
@@ -34,29 +34,29 @@ export const DispatchController: React.FC<DispatchControllerProps> = ({
         <div
           className={`p-3.5 rounded-xl border flex items-start gap-3 ${
             isCritical
-              ? "bg-rose-950/40 border-rose-500/40 text-rose-300"
+              ? "bg-[#251715] border-[#c86754]/30 text-[#e07563]"
               : isElevated
-              ? "bg-amber-950/40 border-amber-500/40 text-amber-300"
-              : "bg-emerald-950/40 border-emerald-500/40 text-emerald-300"
+              ? "bg-[#211d14] border-[#d4af37]/30 text-[#e5c268]"
+              : "bg-[#141d18] border-[#5a9a7c]/30 text-[#6aa88a]"
           }`}
         >
           {isCritical ? (
-            <ShieldAlert className="w-5 h-5 text-rose-400 flex-shrink-0 animate-bounce" />
+            <ShieldAlert className="w-5 h-5 text-[#c86754] flex-shrink-0" />
           ) : isElevated ? (
-            <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-[#d4af37] flex-shrink-0" />
           ) : (
-            <Zap className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+            <Zap className="w-5 h-5 text-[#5a9a7c] flex-shrink-0" />
           )}
 
           <div>
-            <div className="font-bold text-sm text-white">
+            <div className="font-semibold text-sm text-zinc-100">
               {isCritical
                 ? "CRITICAL PEAKER DISPATCH ACTIVE"
                 : isElevated
                 ? "ELEVATED RAMP RATE DETECTED"
                 : "GRID BALANCED & SYNCHRONIZED"}
             </div>
-            <div className="text-[11px] mt-1 text-slate-300 leading-tight">
+            <div className="text-[11px] mt-1 text-zinc-400 leading-tight">
               {isCritical
                 ? "3-Hour net demand ramp exceeds 9,000 MW. Fast-start turbines and full BESS capacity dispatched to prevent localized brownouts."
                 : isElevated
@@ -68,37 +68,37 @@ export const DispatchController: React.FC<DispatchControllerProps> = ({
 
         {/* Telemetry Metrics */}
         <div className="space-y-2">
-          <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 flex items-center justify-between">
-            <span className="text-slate-400">3-Hour Evening Ramp:</span>
-            <span className={`font-bold text-sm ${summary.threeHourRampMW > 9000 ? "text-rose-400" : "text-amber-400"}`}>
+          <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/5 flex items-center justify-between">
+            <span className="text-zinc-400">3-Hour Evening Ramp:</span>
+            <span className={`font-bold text-sm ${summary.threeHourRampMW > 9000 ? "text-[#e07563]" : "text-[#e5c268]"}`}>
               +{formatMW(summary.threeHourRampMW)}
             </span>
           </div>
 
-          <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 flex items-center justify-between">
-            <span className="text-slate-400">Required Peaker Backup:</span>
-            <span className="font-bold text-sm text-white flex items-center gap-1">
-              <Flame className="w-3.5 h-3.5 text-rose-400" />
+          <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/5 flex items-center justify-between">
+            <span className="text-zinc-400">Required Peaker Backup:</span>
+            <span className="font-bold text-sm text-zinc-100 flex items-center gap-1">
+              <Flame className="w-3.5 h-3.5 text-[#c86754]" />
               {formatMW(summary.backupPowerNeededMW)}
             </span>
           </div>
 
-          <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 flex items-center justify-between">
-            <span className="text-slate-400">BESS Midday Solar Absorbed:</span>
-            <span className="font-bold text-sm text-emerald-300">
+          <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/5 flex items-center justify-between">
+            <span className="text-zinc-400">BESS Midday Solar Absorbed:</span>
+            <span className="font-bold text-sm text-[#6aa88a]">
               {formatMWh(summary.batteryEnergyAbsorbedMWh)}
             </span>
           </div>
 
-          <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 flex items-center justify-between">
-            <span className="text-slate-400">Evening BESS Discharged:</span>
-            <span className="font-bold text-sm text-cyan-300">
+          <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/5 flex items-center justify-between">
+            <span className="text-zinc-400">Evening BESS Discharged:</span>
+            <span className="font-bold text-sm text-[#8fa8c0]">
               {formatMWh(summary.batteryEnergyDischargedMWh)}
             </span>
           </div>
 
           {summary.curtailmentMW > 0 && (
-            <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-between text-amber-300">
+            <div className="p-2.5 rounded-lg bg-[#211d14] border border-[#d4af37]/20 flex items-center justify-between text-[#e5c268]">
               <span>Curtailment Excess:</span>
               <span className="font-bold">+{formatMW(summary.curtailmentMW)}</span>
             </div>
@@ -106,20 +106,20 @@ export const DispatchController: React.FC<DispatchControllerProps> = ({
         </div>
 
         {/* Peaker Spool-Up Notice */}
-        <div className="p-3 rounded-lg bg-white/[0.02] border border-white/5 text-[11px] text-slate-400 space-y-1.5">
-          <div className="flex items-center gap-1.5 text-slate-200 font-semibold">
-            <Clock className="w-3.5 h-3.5 text-cyan-400" />
+        <div className="p-3 rounded-lg bg-white/[0.02] border border-white/5 text-[11px] text-zinc-400 space-y-1.5">
+          <div className="flex items-center gap-1.5 text-zinc-200 font-medium">
+            <Clock className="w-3.5 h-3.5 text-[#d4af37]" />
             <span>Spool-Up Lead Time Advisory</span>
           </div>
-          <p>
-            Simple-cycle gas turbines require 15–20 minutes pre-warming before reaching full governor frequency synchronization. The LSTM model anticipates the ramp 3 hours in advance.
+          <p className="text-zinc-400 text-[11px]">
+            Simple-cycle gas turbines require 15–20 minutes pre-warming before reaching full governor synchronization. The LSTM model anticipates the ramp 3 hours in advance.
           </p>
         </div>
 
         {/* Action Button */}
         <SkiperMagneticButton
           onClick={onTriggerEmergencyDispatch}
-          variant={isCritical ? "danger" : "primary"}
+          variant={isCritical ? "danger" : "amber"}
           size="md"
           className="w-full"
           icon={<Zap className="w-4 h-4" />}

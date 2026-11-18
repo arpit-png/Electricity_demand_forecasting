@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useRef, useState, useCallback } from "react";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface BentoCardProps {
   children: React.ReactNode;
   className?: string;
-  glowColor?: "cyan" | "amber" | "rose" | "purple" | "emerald";
+  glowColor?: "gold" | "steel" | "terracotta" | "sage" | "cyan" | "amber" | "rose" | "purple" | "emerald";
   badge?: string;
   title?: string;
   subtitle?: string;
@@ -16,7 +15,7 @@ interface BentoCardProps {
 export const BentoCard: React.FC<BentoCardProps> = ({
   children,
   className,
-  glowColor = "cyan",
+  glowColor = "gold",
   badge,
   title,
   subtitle,
@@ -25,20 +24,29 @@ export const BentoCard: React.FC<BentoCardProps> = ({
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
+  // Muted luxury spotlights
   const glowStyles = {
-    cyan: "rgba(6, 182, 212, 0.15)",
-    amber: "rgba(245, 158, 11, 0.15)",
-    rose: "rgba(244, 63, 94, 0.18)",
-    purple: "rgba(168, 85, 247, 0.16)",
-    emerald: "rgba(16, 185, 129, 0.15)",
+    gold: "rgba(212, 175, 55, 0.08)",
+    amber: "rgba(212, 175, 55, 0.08)",
+    steel: "rgba(120, 140, 160, 0.08)",
+    cyan: "rgba(120, 140, 160, 0.08)",
+    terracotta: "rgba(200, 103, 84, 0.08)",
+    rose: "rgba(200, 103, 84, 0.08)",
+    sage: "rgba(90, 154, 124, 0.08)",
+    emerald: "rgba(90, 154, 124, 0.08)",
+    purple: "rgba(157, 142, 194, 0.08)",
   }[glowColor];
 
-  const borderStyles = {
-    cyan: "group-hover:border-cyan-500/40",
-    amber: "group-hover:border-amber-500/40",
-    rose: "group-hover:border-rose-500/40",
-    purple: "group-hover:border-purple-500/40",
-    emerald: "group-hover:border-emerald-500/40",
+  const borderHoverStyles = {
+    gold: "hover:border-[#d4af37]/30",
+    amber: "hover:border-[#d4af37]/30",
+    steel: "hover:border-[#788ca0]/30",
+    cyan: "hover:border-[#788ca0]/30",
+    terracotta: "hover:border-[#c86754]/30",
+    rose: "hover:border-[#c86754]/30",
+    sage: "hover:border-[#5a9a7c]/30",
+    emerald: "hover:border-[#5a9a7c]/30",
+    purple: "hover:border-[#9d8ec2]/30",
   }[glowColor];
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -57,40 +65,40 @@ export const BentoCard: React.FC<BentoCardProps> = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0c1017]/85 backdrop-blur-xl p-6 transition-all duration-300",
-        borderStyles,
+        "group relative overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0d0d11]/80 backdrop-blur-2xl p-6 transition-all duration-300",
+        borderHoverStyles,
         className
       )}
     >
-      {/* Radial Spotlight Effect */}
+      {/* Subdued radial specular light */}
       {isHovered && (
         <div
           className="pointer-events-none absolute -inset-px transition-opacity duration-300 opacity-100"
           style={{
-            background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, ${glowStyles}, transparent 75%)`,
+            background: `radial-gradient(350px circle at ${mousePos.x}px ${mousePos.y}px, ${glowStyles}, transparent 70%)`,
           }}
         />
       )}
 
-      {/* Subtle top subtle rim line */}
-      <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:via-white/20 transition-all" />
+      {/* Hairline top subtle rim light */}
+      <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent group-hover:via-white/[0.14] transition-all" />
 
       {/* Header if badge/title provided */}
       {(badge || title) && (
         <div className="relative z-10 mb-4 flex items-start justify-between gap-2">
           <div>
             {badge && (
-              <span className="inline-block text-[10px] font-mono uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-800/40 px-2 py-0.5 rounded-full mb-1.5">
+              <span className="inline-block text-[10px] font-mono uppercase tracking-wider text-[#d4af37] bg-[#221e14] border border-[#d4af37]/25 px-2 py-0.5 rounded-full mb-1.5">
                 {badge}
               </span>
             )}
             {title && (
-              <h3 className="text-base font-semibold text-slate-100 tracking-tight flex items-center gap-2">
+              <h3 className="text-base font-semibold text-zinc-100 tracking-tight flex items-center gap-2">
                 {title}
               </h3>
             )}
             {subtitle && (
-              <p className="text-xs text-slate-400 mt-0.5">{subtitle}</p>
+              <p className="text-xs text-zinc-400 mt-0.5">{subtitle}</p>
             )}
           </div>
         </div>

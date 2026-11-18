@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Activity, Sliders, Cpu, Database, Layers, ArrowUp, Volume2, VolumeX } from "lucide-react";
+import { Activity, Sliders, Cpu, Database, Layers, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SkiperDockProps {
@@ -11,7 +11,6 @@ interface SkiperDockProps {
 
 export const SkiperDock: React.FC<SkiperDockProps> = ({ onOpenVault }) => {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const [isAudioEnabled, setIsAudioEnabled] = useState(false);
 
   const dockItems = [
     {
@@ -61,10 +60,9 @@ export const SkiperDock: React.FC<SkiperDockProps> = ({ onOpenVault }) => {
 
   return (
     <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
-      <div className="flex items-center gap-1.5 p-2 rounded-2xl bg-[#0b0e14]/90 border border-white/[0.12] backdrop-blur-2xl shadow-2xl transition-all">
+      <div className="flex items-center gap-1.5 p-2 rounded-2xl bg-[#0e0e13]/90 border border-white/[0.09] backdrop-blur-2xl shadow-2xl transition-all">
         {dockItems.map((item, idx) => {
           const Icon = item.icon;
-          const isHovered = hoveredIdx === idx;
 
           return (
             <motion.button
@@ -75,19 +73,19 @@ export const SkiperDock: React.FC<SkiperDockProps> = ({ onOpenVault }) => {
               whileHover={{ scale: 1.15, y: -4 }}
               whileTap={{ scale: 0.95 }}
               className={cn(
-                "relative group flex items-center justify-center w-10 h-10 rounded-xl text-slate-300 hover:text-white transition-colors",
-                "bg-white/[0.04] hover:bg-white/[0.12] border border-white/5 hover:border-white/20"
+                "relative group flex items-center justify-center w-10 h-10 rounded-xl text-zinc-400 hover:text-white transition-colors",
+                "bg-white/[0.03] hover:bg-white/[0.09] border border-white/5 hover:border-white/15"
               )}
             >
               <Icon className="w-4 h-4" />
 
               {/* Tooltip */}
-              <div className="absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap px-2 py-1 rounded-md bg-slate-900/95 border border-white/10 text-[10px] font-mono text-slate-200 shadow-xl">
+              <div className="absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap px-2 py-1 rounded-md bg-[#18181d] border border-white/10 text-[10px] font-mono text-zinc-200 shadow-xl">
                 {item.label}
               </div>
 
               {item.badge && (
-                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-[#d4af37] shadow-[0_0_6px_#d4af37]" />
               )}
             </motion.button>
           );
@@ -99,7 +97,7 @@ export const SkiperDock: React.FC<SkiperDockProps> = ({ onOpenVault }) => {
         <button
           onClick={scrollToTop}
           title="Return to top"
-          className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] hover:bg-white/[0.12] text-slate-400 hover:text-white border border-white/5 transition-colors"
+          className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.03] hover:bg-white/[0.09] text-zinc-400 hover:text-white border border-white/5 transition-colors"
         >
           <ArrowUp className="w-4 h-4" />
         </button>

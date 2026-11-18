@@ -17,7 +17,7 @@ export const SkiperTextReveal: React.FC<SkiperTextRevealProps> = ({
   className,
   delay = 0,
   highlightWords = [],
-  highlightClass = "text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-amber-300 to-rose-400",
+  highlightClass = "text-transparent bg-clip-text bg-gradient-to-r from-[#f4f4f6] via-[#e5c268] to-[#d4af37]",
 }) => {
   const words = text.split(" ");
 
@@ -35,17 +35,17 @@ export const SkiperTextReveal: React.FC<SkiperTextRevealProps> = ({
       y: 0,
       transition: {
         type: "spring",
-        damping: 18,
-        stiffness: 120,
+        damping: 20,
+        stiffness: 110,
       },
     },
     hidden: {
       opacity: 0,
-      y: 16,
+      y: 14,
       transition: {
         type: "spring",
-        damping: 18,
-        stiffness: 120,
+        damping: 20,
+        stiffness: 110,
       },
     },
   };

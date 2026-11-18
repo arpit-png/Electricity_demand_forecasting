@@ -15,7 +15,7 @@ import {
 } from "recharts";
 import { HourlyDataPoint, GridSummary } from "@/lib/forecasting-engine";
 import { formatMW } from "@/lib/utils";
-import { Sun, Wind, Zap, AlertTriangle, BatteryCharging, Play, Pause, RotateCcw } from "lucide-react";
+import { Sun, Wind, Zap, AlertTriangle, BatteryCharging, Play, Pause } from "lucide-react";
 import { BentoCard } from "./skiper-ui/skiper-bento-grid";
 import { SkiperTabs } from "./skiper-ui/skiper-tabs";
 import { SkiperFrequencyWave } from "./skiper-ui/skiper-frequency-wave";
@@ -57,10 +57,10 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
 
   return (
     <BentoCard
-      glowColor="amber"
+      glowColor="gold"
       badge="SIGNATURE INTERACTIVE CANVAS"
       title="24-Hour Diurnal Net Demand & Duck Curve Visualizer"
-      subtitle="Visualizing the rapid collapse of net demand at solar noon ('Belly') and the catastrophic evening ramp ('Neck')."
+      subtitle="Visualizing the midday belly overgeneration collapse and the rapid 3-hour evening neck ramp."
       className="col-span-12"
     >
       {/* Top Controls Bar */}
@@ -73,74 +73,74 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
         />
 
         {/* Playback & Scrubber Controls */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-mono transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10 text-xs font-mono transition-colors"
           >
-            {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+            {isPlaying ? <Pause className="w-3.5 h-3.5 text-[#d4af37]" /> : <Play className="w-3.5 h-3.5 text-[#d4af37]" />}
             <span>{isPlaying ? "Pause" : "Play Cycle"}</span>
           </button>
 
           <button
             onClick={() => onSelectHour(18)}
-            className="px-2.5 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-mono transition-colors"
+            className="px-2.5 py-1.5 rounded-lg bg-[#251715] hover:bg-[#321c1a] text-[#e07563] border border-[#c86754]/30 text-xs font-mono transition-colors"
           >
-            Jump to Peak Ramp (18:00)
+            Peak Ramp (18:00)
           </button>
 
           <button
             onClick={() => onSelectHour(12)}
-            className="px-2.5 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-mono transition-colors"
+            className="px-2.5 py-1.5 rounded-lg bg-[#211d14] hover:bg-[#2b2518] text-[#e5c268] border border-[#d4af37]/30 text-xs font-mono transition-colors"
           >
-            Jump to Solar Belly (12:00)
+            Solar Belly (12:00)
           </button>
         </div>
       </div>
 
       {/* Main Chart Area */}
-      <div className="w-full h-[420px] relative select-none">
+      <div className="w-full h-[410px] relative select-none">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
             <defs>
-              {/* Solar Gradient */}
+              {/* Solar Champagne Gradient */}
               <linearGradient id="solarGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.4} />
-                <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.0} />
+                <stop offset="5%" stopColor="#d4af37" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#d4af37" stopOpacity={0.0} />
               </linearGradient>
 
-              {/* Wind Gradient */}
+              {/* Wind Mist Gradient */}
               <linearGradient id="windGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#38bdf8" stopOpacity={0.0} />
+                <stop offset="5%" stopColor="#9aa9b8" stopOpacity={0.25} />
+                <stop offset="95%" stopColor="#9aa9b8" stopOpacity={0.0} />
               </linearGradient>
 
-              {/* Net Demand Gradient */}
+              {/* Net Demand Terracotta Gradient */}
               <linearGradient id="netGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.45} />
-                <stop offset="95%" stopColor="#f43f5e" stopOpacity={0.02} />
+                <stop offset="5%" stopColor="#c86754" stopOpacity={0.35} />
+                <stop offset="95%" stopColor="#c86754" stopOpacity={0.02} />
               </linearGradient>
 
-              {/* Battery Mitigation Gradient */}
+              {/* Battery Celadon Gradient */}
               <linearGradient id="batteryGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
-                <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
+                <stop offset="5%" stopColor="#5a9a7c" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#5a9a7c" stopOpacity={0.0} />
               </linearGradient>
             </defs>
 
             <XAxis
               dataKey="timeLabel"
-              stroke="#64748b"
+              stroke="#52525b"
               fontSize={11}
               tickLine={false}
-              axisLine={{ stroke: "#334155" }}
+              axisLine={{ stroke: "#27272a" }}
             />
             <YAxis
-              stroke="#64748b"
+              stroke="#52525b"
               fontSize={11}
               tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
               tickLine={false}
-              axisLine={{ stroke: "#334155" }}
+              axisLine={{ stroke: "#27272a" }}
             />
             <Tooltip content={<CustomChartTooltip />} />
             <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: "11px", fontFamily: "monospace" }} />
@@ -149,29 +149,29 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
             <ReferenceArea
               x1="10:00"
               x2="15:00"
-              fill="#f59e0b"
-              fillOpacity={0.06}
-              stroke="#f59e0b"
+              fill="#d4af37"
+              fillOpacity={0.04}
+              stroke="#d4af37"
               strokeOpacity={0.2}
               strokeDasharray="3 3"
-              label={{ value: "DUCK BELLY (Solar Overgeneration)", fill: "#f59e0b", fontSize: 10, position: "insideTop" }}
+              label={{ value: "DUCK BELLY (Solar Overgeneration)", fill: "#c5a059", fontSize: 10, position: "insideTop" }}
             />
             <ReferenceArea
               x1="17:00"
               x2="21:00"
-              fill="#f43f5e"
-              fillOpacity={0.08}
-              stroke="#f43f5e"
+              fill="#c86754"
+              fillOpacity={0.05}
+              stroke="#c86754"
               strokeOpacity={0.25}
               strokeDasharray="3 3"
-              label={{ value: "DUCK NECK (Peak Evening Ramp)", fill: "#f43f5e", fontSize: 10, position: "insideTop" }}
+              label={{ value: "DUCK NECK (Peak Evening Ramp)", fill: "#c86754", fontSize: 10, position: "insideTop" }}
             />
 
             {/* Scrubber vertical line indicator */}
             <ReferenceLine
               x={data[selectedHour]?.timeLabel}
-              stroke="#22d3ee"
-              strokeWidth={2}
+              stroke="#d4af37"
+              strokeWidth={1.5}
               strokeDasharray="4 4"
             />
 
@@ -182,7 +182,7 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
                   type="monotone"
                   dataKey="solarGen"
                   name="Solar Generation (MW)"
-                  stroke="#f59e0b"
+                  stroke="#d4af37"
                   strokeWidth={2}
                   fillOpacity={1}
                   fill="url(#solarGrad)"
@@ -191,7 +191,7 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
                   type="monotone"
                   dataKey="windGen"
                   name="Wind Generation (MW)"
-                  stroke="#38bdf8"
+                  stroke="#9aa9b8"
                   strokeWidth={1.5}
                   strokeDasharray="4 4"
                   fillOpacity={1}
@@ -201,16 +201,16 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
                   type="monotone"
                   dataKey="grossDemand"
                   name="Total Gross Demand (MW)"
-                  stroke="#06b6d4"
-                  strokeWidth={2.5}
+                  stroke="#788ca0"
+                  strokeWidth={2}
                   dot={false}
                 />
                 <Area
                   type="monotone"
                   dataKey="netDemand"
                   name="Net Demand (Duck Curve)"
-                  stroke="#f43f5e"
-                  strokeWidth={3.5}
+                  stroke="#c86754"
+                  strokeWidth={2.75}
                   fillOpacity={1}
                   fill="url(#netGrad)"
                 />
@@ -223,8 +223,8 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
                   type="monotone"
                   dataKey="netDemand"
                   name="Unmitigated Net Demand"
-                  stroke="#f43f5e"
-                  strokeWidth={2}
+                  stroke="#c86754"
+                  strokeWidth={1.75}
                   strokeDasharray="4 4"
                   dot={false}
                 />
@@ -232,15 +232,15 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
                   type="monotone"
                   dataKey="adjustedNetDemand"
                   name="Stabilized Net Demand (Post-BESS)"
-                  stroke="#10b981"
-                  strokeWidth={3}
+                  stroke="#5a9a7c"
+                  strokeWidth={2.5}
                   dot={false}
                 />
                 <Area
                   type="monotone"
                   dataKey="batteryDispatch"
                   name="Battery Storage Dispatch (MW)"
-                  stroke="#10b981"
+                  stroke="#5a9a7c"
                   strokeWidth={1.5}
                   fillOpacity={1}
                   fill="url(#batteryGrad)"
@@ -249,7 +249,7 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
                   type="monotone"
                   dataKey="peakerGasDispatch"
                   name="Peaker Gas Backup (MW)"
-                  stroke="#ec4899"
+                  stroke="#b85848"
                   strokeWidth={2}
                   dot={false}
                 />
@@ -262,24 +262,24 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
                   type="monotone"
                   dataKey="netDemand"
                   name="Ground Truth Net Demand"
-                  stroke="#ffffff"
-                  strokeWidth={3}
+                  stroke="#e4e4e7"
+                  strokeWidth={2.5}
                   dot={false}
                 />
                 <Line
                   type="monotone"
                   dataKey="lstmPrediction"
                   name="LSTM Neural Forecast"
-                  stroke="#a855f7"
-                  strokeWidth={2.5}
+                  stroke="#9d8ec2"
+                  strokeWidth={2.25}
                   dot={false}
                 />
                 <Line
                   type="monotone"
                   dataKey="gradientBoostingPrediction"
                   name="Gradient Boosting (XGBoost)"
-                  stroke="#38bdf8"
-                  strokeWidth={2}
+                  stroke="#8fa8c0"
+                  strokeWidth={1.75}
                   strokeDasharray="3 3"
                   dot={false}
                 />
@@ -287,7 +287,7 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
                   type="monotone"
                   dataKey="ridgeRegressionPrediction"
                   name="Multivariate Ridge Regression"
-                  stroke="#f59e0b"
+                  stroke="#d1b181"
                   strokeWidth={1.5}
                   strokeDasharray="5 5"
                   dot={false}
@@ -299,21 +299,21 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
       </div>
 
       {/* Interactive 24-Hour Slider & Telemetry Scrubber Bar */}
-      <div className="mt-6 pt-4 border-t border-white/[0.08]">
-        <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+      <div className="mt-5 pt-4 border-t border-white/[0.06]">
+        <div className="flex items-center justify-between text-xs font-mono text-zinc-400 mb-2">
           <div className="flex items-center gap-2">
-            <span className="text-cyan-400 font-bold">SCRUBBER TIME:</span>
-            <span className="text-white font-bold bg-white/10 px-2 py-0.5 rounded">
+            <span className="text-[#d4af37] font-semibold">TIME SCRUBBER:</span>
+            <span className="text-zinc-200 font-bold bg-white/[0.06] px-2 py-0.5 rounded border border-white/5">
               {currentPoint.timeLabel}
             </span>
             {currentPoint.isPeakRamp && (
-              <span className="text-rose-400 bg-rose-500/20 px-2 py-0.5 rounded border border-rose-500/30 flex items-center gap-1">
+              <span className="text-[#e07563] bg-[#291715] px-2 py-0.5 rounded border border-[#c86754]/30 flex items-center gap-1 text-[11px]">
                 <AlertTriangle className="w-3 h-3" />
-                CRITICAL EVENING RAMP ZONE
+                CRITICAL EVENING RAMP WINDOW
               </span>
             )}
           </div>
-          <span className="text-slate-400 hidden sm:inline">Drag or click along the 24-hour axis</span>
+          <span className="text-zinc-500 hidden sm:inline text-[11px]">Click or drag along the 24-hour cycle</span>
         </div>
 
         <input
@@ -322,7 +322,7 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
           max="23"
           value={selectedHour}
           onChange={(e) => onSelectHour(parseInt(e.target.value))}
-          className="w-full accent-cyan-400 cursor-pointer h-2 bg-slate-800 rounded-lg appearance-none"
+          className="w-full accent-[#d4af37] cursor-pointer h-1.5 bg-zinc-800 rounded-lg appearance-none"
         />
 
         {/* 24-Hour Hour Buttons */}
@@ -333,12 +333,12 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
               onClick={() => onSelectHour(d.hour)}
               className={`py-1 rounded text-center transition-all ${
                 d.hour === selectedHour
-                  ? "bg-cyan-500 text-slate-950 font-bold scale-110 shadow-[0_0_10px_#06b6d4]"
+                  ? "bg-[#d4af37] text-zinc-950 font-bold scale-105 shadow-[0_0_8px_rgba(212,175,55,0.4)]"
                   : d.isPeakRamp
-                  ? "bg-rose-500/20 text-rose-300 hover:bg-rose-500/30"
+                  ? "bg-[#251715] text-[#e07563] hover:bg-[#321c1a]"
                   : d.hour >= 11 && d.hour <= 14
-                  ? "bg-amber-500/20 text-amber-300 hover:bg-amber-500/30"
-                  : "bg-white/[0.03] text-slate-400 hover:bg-white/[0.08]"
+                  ? "bg-[#211d14] text-[#e5c268] hover:bg-[#2b2518]"
+                  : "bg-white/[0.02] text-zinc-400 hover:bg-white/[0.06]"
               }`}
             >
               {d.hour}
@@ -358,43 +358,43 @@ export const DuckCurveVisualizer: React.FC<DuckCurveVisualizerProps> = ({
       {/* Real-Time Live Point Telemetry Strip */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mt-4 pt-4 border-t border-white/[0.06] text-xs font-mono">
         <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
-          <span className="text-slate-500 text-[10px] uppercase flex items-center gap-1">
-            <Zap className="w-3 h-3 text-cyan-400" />
+          <span className="text-zinc-400 text-[10px] uppercase flex items-center gap-1">
+            <Zap className="w-3 h-3 text-[#788ca0]" />
             Gross Demand
           </span>
-          <span className="text-sm font-bold text-slate-100">{formatMW(currentPoint.grossDemand)}</span>
+          <span className="text-sm font-bold text-zinc-200">{formatMW(currentPoint.grossDemand)}</span>
         </div>
 
         <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
-          <span className="text-slate-500 text-[10px] uppercase flex items-center gap-1">
-            <Sun className="w-3 h-3 text-amber-400" />
+          <span className="text-zinc-400 text-[10px] uppercase flex items-center gap-1">
+            <Sun className="w-3 h-3 text-[#d4af37]" />
             Solar Generation
           </span>
-          <span className="text-sm font-bold text-amber-300">{formatMW(currentPoint.solarGen)}</span>
+          <span className="text-sm font-bold text-[#e5c268]">{formatMW(currentPoint.solarGen)}</span>
         </div>
 
         <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
-          <span className="text-slate-500 text-[10px] uppercase flex items-center gap-1">
-            <Wind className="w-3 h-3 text-sky-400" />
+          <span className="text-zinc-400 text-[10px] uppercase flex items-center gap-1">
+            <Wind className="w-3 h-3 text-[#9aa9b8]" />
             Wind Generation
           </span>
-          <span className="text-sm font-bold text-sky-300">{formatMW(currentPoint.windGen)}</span>
+          <span className="text-sm font-bold text-[#b4c2d0]">{formatMW(currentPoint.windGen)}</span>
         </div>
 
         <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
-          <span className="text-slate-500 text-[10px] uppercase flex items-center gap-1">
-            <AlertTriangle className="w-3 h-3 text-rose-400" />
+          <span className="text-zinc-400 text-[10px] uppercase flex items-center gap-1">
+            <AlertTriangle className="w-3 h-3 text-[#c86754]" />
             Net Demand
           </span>
-          <span className="text-sm font-bold text-rose-400">{formatMW(currentPoint.netDemand)}</span>
+          <span className="text-sm font-bold text-[#e07563]">{formatMW(currentPoint.netDemand)}</span>
         </div>
 
         <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 col-span-2 md:col-span-1">
-          <span className="text-slate-500 text-[10px] uppercase flex items-center gap-1">
-            <BatteryCharging className="w-3 h-3 text-emerald-400" />
+          <span className="text-zinc-400 text-[10px] uppercase flex items-center gap-1">
+            <BatteryCharging className="w-3 h-3 text-[#5a9a7c]" />
             Ramp Velocity
           </span>
-          <span className={`text-sm font-bold ${currentPoint.rampRate > 2000 ? "text-rose-400" : currentPoint.rampRate > 0 ? "text-amber-400" : "text-emerald-400"}`}>
+          <span className={`text-sm font-bold ${currentPoint.rampRate > 2000 ? "text-[#e07563]" : currentPoint.rampRate > 0 ? "text-[#e5c268]" : "text-[#6aa88a]"}`}>
             {currentPoint.rampRate > 0 ? `+${currentPoint.rampRate} MW/h` : `${currentPoint.rampRate} MW/h`}
           </span>
         </div>
@@ -407,8 +407,8 @@ function CustomChartTooltip({ active, payload, label }: any) {
   if (!active || !payload || !payload.length) return null;
 
   return (
-    <div className="rounded-xl border border-white/10 bg-[#090d14]/95 p-3.5 backdrop-blur-xl shadow-2xl font-mono text-xs text-slate-200 min-w-[200px]">
-      <div className="font-bold text-cyan-300 border-b border-white/10 pb-1.5 mb-2 flex items-center justify-between">
+    <div className="rounded-xl border border-white/10 bg-[#0c0c10]/95 p-3.5 backdrop-blur-2xl shadow-2xl font-mono text-xs text-zinc-200 min-w-[200px]">
+      <div className="font-semibold text-[#d4af37] border-b border-white/10 pb-1.5 mb-2 flex items-center justify-between">
         <span>Time: {label}</span>
       </div>
       <div className="flex flex-col gap-1.5">

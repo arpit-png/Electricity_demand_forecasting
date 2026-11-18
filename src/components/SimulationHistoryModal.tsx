@@ -5,11 +5,10 @@ import {
   SimulationRecord,
   getSimulations,
   saveSimulation,
-  isFirebaseConnected,
 } from "@/lib/firebase";
 import { ScenarioParams, GridSummary } from "@/lib/forecasting-engine";
 import { formatMW } from "@/lib/utils";
-import { Database, Save, RotateCcw, Cloud, CheckCircle, Clock, Trash2, X, AlertCircle } from "lucide-react";
+import { Database, Save, RotateCcw, CheckCircle, Clock, X } from "lucide-react";
 import { SkiperMagneticButton } from "./skiper-ui/skiper-magnetic-button";
 
 interface SimulationHistoryModalProps {
@@ -77,25 +76,25 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-2xl border border-white/10 bg-[#0b0e14] shadow-2xl flex flex-col font-mono text-xs">
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-2xl border border-white/10 bg-[#0c0c10] shadow-2xl flex flex-col font-mono text-xs">
         {/* Header */}
         <div className="p-4 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
           <div className="flex items-center gap-2">
-            <Database className="w-4 h-4 text-cyan-400" />
-            <h3 className="text-sm font-bold text-white">Database Simulation Vault</h3>
+            <Database className="w-4 h-4 text-[#d4af37]" />
+            <h3 className="text-sm font-semibold text-zinc-100">Database Simulation Vault</h3>
             <span
               className={`px-2 py-0.5 rounded-full text-[10px] font-mono border ${
                 source === "firestore"
-                  ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-                  : "bg-cyan-500/20 text-cyan-300 border-cyan-500/30"
+                  ? "bg-[#141d18] text-[#5a9a7c] border-[#5a9a7c]/30"
+                  : "bg-[#211d14] text-[#e5c268] border-[#d4af37]/30"
               }`}
             >
-              {source === "firestore" ? "⚡ Cloud Firestore Sync" : "💾 Resilient Local + Firestore Ready"}
+              {source === "firestore" ? "⚡ Cloud Firestore Active" : "💾 Resilient Local + Firestore Ready"}
             </span>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -104,13 +103,13 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
         {/* Content Body */}
         <div className="overflow-y-auto p-5 space-y-6">
           {/* Save Current Run Form */}
-          <form onSubmit={handleSave} className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-3">
+          <form onSubmit={handleSave} className="p-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="font-bold text-slate-200 flex items-center gap-1.5">
-                <Save className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="font-semibold text-zinc-200 flex items-center gap-1.5">
+                <Save className="w-3.5 h-3.5 text-[#d4af37]" />
                 Snapshot Current Grid Simulation
               </span>
-              <span className="text-[10px] text-slate-500">
+              <span className="text-[10px] text-zinc-500">
                 Peak Net: {formatMW(currentSummary.peakNetDemand)} • 3h Ramp: {formatMW(currentSummary.threeHourRampMW)}
               </span>
             </div>
@@ -122,24 +121,24 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
                 value={simName}
                 onChange={(e) => setSimName(e.target.value)}
                 required
-                className="w-full px-3 py-2 rounded-lg bg-black/40 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+                className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white placeholder-zinc-500 focus:outline-none focus:border-[#d4af37]"
               />
               <input
                 type="text"
                 placeholder="Optional notes or observations..."
                 value={simNotes}
                 onChange={(e) => setSimNotes(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg bg-black/40 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+                className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white placeholder-zinc-500 focus:outline-none focus:border-[#d4af37]"
               />
             </div>
 
             <div className="flex items-center justify-between pt-1">
               {saveSuccess ? (
-                <span className="text-emerald-400 flex items-center gap-1 text-[11px]">
+                <span className="text-[#5a9a7c] flex items-center gap-1 text-[11px]">
                   <CheckCircle className="w-3.5 h-3.5" /> Saved successfully to database!
                 </span>
               ) : (
-                <span className="text-slate-500 text-[10px]">Saved snapshots can be recalled at any time.</span>
+                <span className="text-zinc-500 text-[10px]">Saved snapshots can be recalled at any time.</span>
               )}
 
               <SkiperMagneticButton
@@ -156,39 +155,39 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
 
           {/* Previous History List */}
           <div className="space-y-3">
-            <h4 className="text-xs uppercase tracking-wider text-slate-400 font-bold flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-slate-400" />
+            <h4 className="text-xs uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-zinc-500" />
               Historical Simulation Records ({simulations.length})
             </h4>
 
             {simulations.length === 0 ? (
-              <div className="p-6 text-center text-slate-500 border border-dashed border-white/10 rounded-xl">
-                No simulations saved yet. Run a scenario above and save it to the database!
+              <div className="p-6 text-center text-zinc-500 border border-dashed border-white/10 rounded-xl">
+                No simulations saved yet. Run a scenario above and commit it to the database!
               </div>
             ) : (
               <div className="space-y-2.5">
                 {simulations.map((sim) => (
                   <div
                     key={sim.id}
-                    className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/15 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                    className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-white">{sim.name}</span>
-                        <span className="text-[10px] text-slate-500">
+                        <span className="font-semibold text-zinc-100">{sim.name}</span>
+                        <span className="text-[10px] text-zinc-500">
                           {new Date(sim.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                         </span>
                       </div>
-                      <div className="flex flex-wrap gap-2 text-[11px] text-slate-400">
+                      <div className="flex flex-wrap gap-2 text-[11px] text-zinc-400">
                         <span>Solar: {(sim.scenarioParams.solarCapacityMW / 1000).toFixed(1)} GW</span>
                         <span>•</span>
                         <span>Wind: {(sim.scenarioParams.windCapacityMW / 1000).toFixed(1)} GW</span>
                         <span>•</span>
-                        <span className={sim.summary.threeHourRampMW > 9000 ? "text-rose-400" : "text-amber-400"}>
+                        <span className={sim.summary.threeHourRampMW > 9000 ? "text-[#e07563]" : "text-[#e5c268]"}>
                           Ramp: {formatMW(sim.summary.threeHourRampMW)}
                         </span>
                       </div>
-                      {sim.notes && <p className="text-[10px] text-slate-400 italic mt-0.5">"{sim.notes}"</p>}
+                      {sim.notes && <p className="text-[10px] text-zinc-400 italic mt-0.5">"{sim.notes}"</p>}
                     </div>
 
                     <button
@@ -196,9 +195,9 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
                         onLoadScenario(sim.scenarioParams);
                         onClose();
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-mono transition-colors flex items-center gap-1 self-start sm:self-center"
+                      className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10 text-xs font-mono transition-colors flex items-center gap-1 self-start sm:self-center"
                     >
-                      <RotateCcw className="w-3 h-3" />
+                      <RotateCcw className="w-3 h-3 text-[#d4af37]" />
                       Restore Scenario
                     </button>
                   </div>

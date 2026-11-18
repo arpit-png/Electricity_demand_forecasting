@@ -24,7 +24,7 @@ export const SkiperMagneticButton: React.FC<SkiperMagneticButtonProps> = ({
   const ref = useRef<HTMLButtonElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
+  const springConfig = { damping: 18, stiffness: 180, mass: 0.1 };
   const x = useSpring(0, springConfig);
   const y = useSpring(0, springConfig);
 
@@ -34,8 +34,8 @@ export const SkiperMagneticButton: React.FC<SkiperMagneticButtonProps> = ({
     const { left, top, width, height } = ref.current.getBoundingClientRect();
     const middleX = clientX - (left + width / 2);
     const middleY = clientY - (top + height / 2);
-    x.set(middleX * 0.28);
-    y.set(middleY * 0.28);
+    x.set(middleX * 0.22);
+    y.set(middleY * 0.22);
   };
 
   const handleMouseLeave = () => {
@@ -44,17 +44,18 @@ export const SkiperMagneticButton: React.FC<SkiperMagneticButtonProps> = ({
     y.set(0);
   };
 
+  // Luxury understated styling
   const variantStyles = {
-    primary: "bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-[0_0_20px_rgba(6,182,212,0.35)] font-semibold",
-    secondary: "bg-white/[0.06] hover:bg-white/[0.12] text-slate-200 border border-white/10 hover:border-white/20",
-    danger: "bg-rose-500 hover:bg-rose-400 text-white shadow-[0_0_20px_rgba(244,63,94,0.35)] font-semibold",
-    amber: "bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-[0_0_20px_rgba(245,158,11,0.35)] font-semibold",
+    primary: "bg-[#f4f4f6] hover:bg-white text-[#09090c] font-semibold shadow-[0_2px_12px_rgba(255,255,255,0.08)] border border-white/20",
+    secondary: "bg-[#141419]/90 hover:bg-[#1a1a21] text-zinc-300 hover:text-white border border-white/[0.09] hover:border-white/[0.18]",
+    danger: "bg-[#251515] hover:bg-[#321c1c] text-[#e07563] border border-[#c86754]/30 hover:border-[#c86754]/50 font-medium",
+    amber: "bg-[#211d13] hover:bg-[#2b2518] text-[#e5c268] border border-[#d4af37]/30 hover:border-[#d4af37]/50 font-medium",
   }[variant];
 
   const sizeStyles = {
     sm: "px-3 py-1.5 text-xs rounded-lg gap-1.5",
-    md: "px-4 py-2.5 text-sm rounded-xl gap-2",
-    lg: "px-6 py-3.5 text-base rounded-2xl gap-2.5",
+    md: "px-4 py-2 text-sm rounded-xl gap-2",
+    lg: "px-5 py-2.5 text-sm rounded-xl gap-2.5",
   }[size];
 
   return (
@@ -65,9 +66,9 @@ export const SkiperMagneticButton: React.FC<SkiperMagneticButtonProps> = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      whileTap={{ scale: 0.96 }}
+      whileTap={{ scale: 0.97 }}
       className={cn(
-        "relative inline-flex items-center justify-center font-medium transition-colors select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400",
+        "relative inline-flex items-center justify-center font-medium transition-all duration-200 select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-[#d4af37]/50",
         variantStyles,
         sizeStyles,
         className

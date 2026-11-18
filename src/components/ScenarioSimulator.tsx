@@ -3,7 +3,7 @@
 import React from "react";
 import { ScenarioParams, DEFAULT_SCENARIOS } from "@/lib/forecasting-engine";
 import { BentoCard } from "./skiper-ui/skiper-bento-grid";
-import { Sun, Wind, CloudRain, Thermometer, Battery, Car, RefreshCw, Zap } from "lucide-react";
+import { Sun, Wind, CloudRain, Thermometer, Battery, Car, RefreshCw } from "lucide-react";
 
 interface ScenarioSimulatorProps {
   params: ScenarioParams;
@@ -30,7 +30,7 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
 
   return (
     <BentoCard
-      glowColor="cyan"
+      glowColor="gold"
       badge="LIVE GRID SCENARIO GENERATOR"
       title="Dynamic Parameter Injection & Stress Test Sandbox"
       subtitle="Tune renewable penetration, weather covariates, EV charging surge, and battery energy storage buffer."
@@ -38,13 +38,13 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
     >
       {/* Preset Selector */}
       <div className="flex flex-wrap items-center gap-2 mb-6">
-        <span className="text-xs font-mono text-slate-400 mr-2">Preset Stress Tests:</span>
+        <span className="text-xs font-mono text-zinc-400 mr-2">Preset Scenarios:</span>
         <button
           onClick={() => setPreset("summer-normal")}
           className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border ${
             params.scenarioType === "summer-normal"
-              ? "bg-amber-500/20 text-amber-300 border-amber-500/40 font-bold shadow-[0_0_10px_rgba(245,158,11,0.2)]"
-              : "bg-white/5 text-slate-400 border-white/5 hover:bg-white/10"
+              ? "bg-[#221e14] text-[#e5c268] border-[#d4af37]/40 font-semibold"
+              : "bg-white/[0.03] text-zinc-400 border-white/5 hover:bg-white/[0.07]"
           }`}
         >
           ☀️ Normal Summer
@@ -54,8 +54,8 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
           onClick={() => setPreset("heatwave")}
           className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border ${
             params.scenarioType === "heatwave"
-              ? "bg-rose-500/20 text-rose-300 border-rose-500/40 font-bold shadow-[0_0_10px_rgba(244,63,94,0.2)]"
-              : "bg-white/5 text-slate-400 border-white/5 hover:bg-white/10"
+              ? "bg-[#251715] text-[#e07563] border-[#c86754]/40 font-semibold"
+              : "bg-white/[0.03] text-zinc-400 border-white/5 hover:bg-white/[0.07]"
           }`}
         >
           🔥 41°C Heatwave Surge
@@ -65,8 +65,8 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
           onClick={() => setPreset("cloud-storm")}
           className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border ${
             params.scenarioType === "cloud-storm"
-              ? "bg-sky-500/20 text-sky-300 border-sky-500/40 font-bold shadow-[0_0_10px_rgba(56,189,248,0.2)]"
-              : "bg-white/5 text-slate-400 border-white/5 hover:bg-white/10"
+              ? "bg-[#141b24] text-[#8fa8c0] border-[#788ca0]/40 font-semibold"
+              : "bg-white/[0.03] text-zinc-400 border-white/5 hover:bg-white/[0.07]"
           }`}
         >
           ⛈️ Severe Cloud Storm
@@ -76,8 +76,8 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
           onClick={() => setPreset("high-renewables")}
           className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border ${
             params.scenarioType === "high-renewables"
-              ? "bg-cyan-500/20 text-cyan-300 border-cyan-500/40 font-bold shadow-[0_0_10px_rgba(6,182,212,0.2)]"
-              : "bg-white/5 text-slate-400 border-white/5 hover:bg-white/10"
+              ? "bg-[#1f1d19] text-[#e6cca0] border-[#d4af37]/40 font-semibold"
+              : "bg-white/[0.03] text-zinc-400 border-white/5 hover:bg-white/[0.07]"
           }`}
         >
           ⚡ Ultra Deep Duck (24 GW Solar)
@@ -85,8 +85,8 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
 
         <button
           onClick={onReset}
-          className="ml-auto p-1.5 rounded-lg text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 transition-colors"
-          title="Reset to default"
+          className="ml-auto p-1.5 rounded-lg text-zinc-400 hover:text-white bg-white/[0.03] hover:bg-white/[0.08] transition-colors"
+          title="Reset to baseline"
         >
           <RefreshCw className="w-4 h-4" />
         </button>
@@ -96,8 +96,8 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs font-mono">
         {/* Solar Capacity */}
         <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
-          <div className="flex items-center justify-between text-slate-300 mb-2">
-            <span className="flex items-center gap-1.5 text-amber-400">
+          <div className="flex items-center justify-between text-zinc-300 mb-2">
+            <span className="flex items-center gap-1.5 text-[#d4af37]">
               <Sun className="w-4 h-4" />
               Installed Solar PV
             </span>
@@ -110,18 +110,18 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
             step="500"
             value={params.solarCapacityMW}
             onChange={(e) => handleSliderChange("solarCapacityMW", Number(e.target.value))}
-            className="w-full accent-amber-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg appearance-none"
+            className="w-full accent-[#d4af37] cursor-pointer h-1.5 bg-zinc-800 rounded-lg appearance-none"
           />
-          <div className="flex justify-between text-[10px] text-slate-500 mt-1">
+          <div className="flex justify-between text-[10px] text-zinc-500 mt-1">
             <span>4 GW (Legacy Grid)</span>
-            <span>30 GW (Decentralized Boom)</span>
+            <span>30 GW (High Influx)</span>
           </div>
         </div>
 
         {/* Wind Capacity */}
         <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
-          <div className="flex items-center justify-between text-slate-300 mb-2">
-            <span className="flex items-center gap-1.5 text-sky-400">
+          <div className="flex items-center justify-between text-zinc-300 mb-2">
+            <span className="flex items-center gap-1.5 text-[#9aa9b8]">
               <Wind className="w-4 h-4" />
               Installed Wind Fleet
             </span>
@@ -134,9 +134,9 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
             step="200"
             value={params.windCapacityMW}
             onChange={(e) => handleSliderChange("windCapacityMW", Number(e.target.value))}
-            className="w-full accent-sky-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg appearance-none"
+            className="w-full accent-[#9aa9b8] cursor-pointer h-1.5 bg-zinc-800 rounded-lg appearance-none"
           />
-          <div className="flex justify-between text-[10px] text-slate-500 mt-1">
+          <div className="flex justify-between text-[10px] text-zinc-500 mt-1">
             <span>1 GW</span>
             <span>12 GW (Offshore + Onshore)</span>
           </div>
@@ -144,9 +144,9 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
 
         {/* Cloud Cover */}
         <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
-          <div className="flex items-center justify-between text-slate-300 mb-2">
-            <span className="flex items-center gap-1.5 text-slate-300">
-              <CloudRain className="w-4 h-4 text-cyan-400" />
+          <div className="flex items-center justify-between text-zinc-300 mb-2">
+            <span className="flex items-center gap-1.5 text-[#8fa8c0]">
+              <CloudRain className="w-4 h-4" />
               Cloud Cover Attenuation
             </span>
             <span className="font-bold text-white">{params.cloudCoverPercent}%</span>
@@ -158,9 +158,9 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
             step="1"
             value={params.cloudCoverPercent}
             onChange={(e) => handleSliderChange("cloudCoverPercent", Number(e.target.value))}
-            className="w-full accent-cyan-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg appearance-none"
+            className="w-full accent-[#8fa8c0] cursor-pointer h-1.5 bg-zinc-800 rounded-lg appearance-none"
           />
-          <div className="flex justify-between text-[10px] text-slate-500 mt-1">
+          <div className="flex justify-between text-[10px] text-zinc-500 mt-1">
             <span>0% (Clear Sky)</span>
             <span>95% (Dense Overcast)</span>
           </div>
@@ -168,8 +168,8 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
 
         {/* Temperature */}
         <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
-          <div className="flex items-center justify-between text-slate-300 mb-2">
-            <span className="flex items-center gap-1.5 text-rose-400">
+          <div className="flex items-center justify-between text-zinc-300 mb-2">
+            <span className="flex items-center gap-1.5 text-[#c86754]">
               <Thermometer className="w-4 h-4" />
               Ambient Peak Temperature
             </span>
@@ -182,9 +182,9 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
             step="1"
             value={params.temperatureCelsius}
             onChange={(e) => handleSliderChange("temperatureCelsius", Number(e.target.value))}
-            className="w-full accent-rose-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg appearance-none"
+            className="w-full accent-[#c86754] cursor-pointer h-1.5 bg-zinc-800 rounded-lg appearance-none"
           />
-          <div className="flex justify-between text-[10px] text-slate-500 mt-1">
+          <div className="flex justify-between text-[10px] text-zinc-500 mt-1">
             <span>18°C (Mild)</span>
             <span>45°C (Extreme Heat Dome)</span>
           </div>
@@ -192,8 +192,8 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
 
         {/* EV Fleet Adoption */}
         <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
-          <div className="flex items-center justify-between text-slate-300 mb-2">
-            <span className="flex items-center gap-1.5 text-purple-400">
+          <div className="flex items-center justify-between text-zinc-300 mb-2">
+            <span className="flex items-center gap-1.5 text-[#9d8ec2]">
               <Car className="w-4 h-4" />
               Evening EV Charging Multiplier
             </span>
@@ -206,9 +206,9 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
             step="0.05"
             value={params.evAdoptionFactor}
             onChange={(e) => handleSliderChange("evAdoptionFactor", Number(e.target.value))}
-            className="w-full accent-purple-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg appearance-none"
+            className="w-full accent-[#9d8ec2] cursor-pointer h-1.5 bg-zinc-800 rounded-lg appearance-none"
           />
-          <div className="flex justify-between text-[10px] text-slate-500 mt-1">
+          <div className="flex justify-between text-[10px] text-zinc-500 mt-1">
             <span>1.0x (Baseline)</span>
             <span>2.2x (Uncoordinated Fleet Peak)</span>
           </div>
@@ -216,8 +216,8 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
 
         {/* Battery Capacity */}
         <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
-          <div className="flex items-center justify-between text-slate-300 mb-2">
-            <span className="flex items-center gap-1.5 text-emerald-400">
+          <div className="flex items-center justify-between text-zinc-300 mb-2">
+            <span className="flex items-center gap-1.5 text-[#5a9a7c]">
               <Battery className="w-4 h-4" />
               Grid Battery Storage (BESS)
             </span>
@@ -230,9 +230,9 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
             step="1000"
             value={params.batteryCapacityMWh}
             onChange={(e) => handleSliderChange("batteryCapacityMWh", Number(e.target.value))}
-            className="w-full accent-emerald-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg appearance-none"
+            className="w-full accent-[#5a9a7c] cursor-pointer h-1.5 bg-zinc-800 rounded-lg appearance-none"
           />
-          <div className="flex justify-between text-[10px] text-slate-500 mt-1">
+          <div className="flex justify-between text-[10px] text-zinc-500 mt-1">
             <span>2 GWh</span>
             <span>30 GWh (Deep Decarbonization)</span>
           </div>
