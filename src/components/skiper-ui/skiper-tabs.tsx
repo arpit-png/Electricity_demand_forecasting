@@ -29,7 +29,7 @@ export const SkiperTabs: React.FC<SkiperTabsProps> = ({
   return (
     <div
       className={cn(
-        "inline-flex items-center rounded-xl bg-white/[0.03] p-1 border border-white/[0.07] backdrop-blur-xl",
+        "inline-flex items-center rounded-full bg-[#18191c] p-1 border border-[#3c4043] select-none shadow-sm",
         className
       )}
     >
@@ -40,9 +40,9 @@ export const SkiperTabs: React.FC<SkiperTabsProps> = ({
             key={tab.id}
             onClick={() => onChange(tab.id)}
             className={cn(
-              "relative z-10 flex items-center justify-center font-medium transition-colors select-none",
-              size === "sm" ? "px-3 py-1.5 text-xs rounded-lg gap-1.5" : "px-4 py-2 text-sm rounded-lg gap-2",
-              isActive ? "text-zinc-100 font-semibold" : "text-zinc-400 hover:text-zinc-200"
+              "relative z-10 flex items-center justify-center font-sans font-medium transition-all duration-200 select-none",
+              size === "sm" ? "px-3.5 py-1.5 text-xs rounded-full gap-1.5" : "px-5 py-2 text-sm rounded-full gap-2",
+              isActive ? "text-[#8ab4f8] font-semibold" : "text-[#9aa0a6] hover:text-[#e8eaed] hover:bg-white/[0.04]"
             )}
           >
             {tab.icon && <span className="w-3.5 h-3.5 flex items-center justify-center">{tab.icon}</span>}
@@ -50,8 +50,10 @@ export const SkiperTabs: React.FC<SkiperTabsProps> = ({
             {tab.badge !== undefined && (
               <span
                 className={cn(
-                  "px-1.5 py-0.2 rounded-full text-[10px] font-mono",
-                  isActive ? "bg-[#272318] text-[#e5c268] border border-[#d4af37]/30" : "bg-white/5 text-zinc-500"
+                  "px-2 py-0.5 rounded-full text-[10px] font-mono",
+                  isActive
+                    ? "bg-[#1b2b44] text-[#8ab4f8] border border-[#8ab4f8]/40"
+                    : "bg-[#28292c] text-[#9aa0a6]"
                 )}
               >
                 {tab.badge}
@@ -59,9 +61,9 @@ export const SkiperTabs: React.FC<SkiperTabsProps> = ({
             )}
             {isActive && (
               <motion.div
-                layoutId="activeSkiperTabPill"
+                layoutId="activeGoogleM3TabPill"
                 transition={{ type: "spring", stiffness: 450, damping: 35 }}
-                className="absolute inset-0 z-[-1] rounded-lg bg-white/[0.08] border border-white/10 shadow-sm"
+                className="absolute inset-0 z-[-1] rounded-full bg-[#283244] border border-[#8ab4f8]/40 shadow-sm"
               />
             )}
           </button>

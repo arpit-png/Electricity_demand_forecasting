@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 interface BentoCardProps {
   children: React.ReactNode;
   className?: string;
-  glowColor?: "gold" | "steel" | "terracotta" | "sage" | "cyan" | "amber" | "rose" | "purple" | "emerald";
+  glowColor?: "blue" | "green" | "yellow" | "red" | "purple" | "gold" | "steel" | "terracotta" | "sage";
   badge?: string;
   title?: string;
   subtitle?: string;
@@ -15,7 +15,7 @@ interface BentoCardProps {
 export const BentoCard: React.FC<BentoCardProps> = ({
   children,
   className,
-  glowColor = "gold",
+  glowColor = "blue",
   badge,
   title,
   subtitle,
@@ -24,29 +24,41 @@ export const BentoCard: React.FC<BentoCardProps> = ({
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
-  // Muted luxury spotlights
+  // Google Material 3 Tonal Spotlights
   const glowStyles = {
-    gold: "rgba(212, 175, 55, 0.08)",
-    amber: "rgba(212, 175, 55, 0.08)",
-    steel: "rgba(120, 140, 160, 0.08)",
-    cyan: "rgba(120, 140, 160, 0.08)",
-    terracotta: "rgba(200, 103, 84, 0.08)",
-    rose: "rgba(200, 103, 84, 0.08)",
-    sage: "rgba(90, 154, 124, 0.08)",
-    emerald: "rgba(90, 154, 124, 0.08)",
-    purple: "rgba(157, 142, 194, 0.08)",
+    blue: "rgba(66, 133, 244, 0.12)",
+    gold: "rgba(251, 188, 4, 0.12)",
+    yellow: "rgba(251, 188, 4, 0.12)",
+    green: "rgba(52, 168, 83, 0.12)",
+    sage: "rgba(52, 168, 83, 0.12)",
+    red: "rgba(234, 67, 53, 0.12)",
+    terracotta: "rgba(234, 67, 53, 0.12)",
+    purple: "rgba(161, 66, 244, 0.12)",
+    steel: "rgba(138, 180, 248, 0.12)",
   }[glowColor];
 
   const borderHoverStyles = {
-    gold: "hover:border-[#d4af37]/30",
-    amber: "hover:border-[#d4af37]/30",
-    steel: "hover:border-[#788ca0]/30",
-    cyan: "hover:border-[#788ca0]/30",
-    terracotta: "hover:border-[#c86754]/30",
-    rose: "hover:border-[#c86754]/30",
-    sage: "hover:border-[#5a9a7c]/30",
-    emerald: "hover:border-[#5a9a7c]/30",
-    purple: "hover:border-[#9d8ec2]/30",
+    blue: "hover:border-[#8ab4f8]/50",
+    gold: "hover:border-[#fdd663]/50",
+    yellow: "hover:border-[#fdd663]/50",
+    green: "hover:border-[#81c995]/50",
+    sage: "hover:border-[#81c995]/50",
+    red: "hover:border-[#f28b82]/50",
+    terracotta: "hover:border-[#f28b82]/50",
+    purple: "hover:border-[#c58af9]/50",
+    steel: "hover:border-[#8ab4f8]/50",
+  }[glowColor];
+
+  const badgeColorStyles = {
+    blue: "bg-[#1b2b44] text-[#8ab4f8] border-[#8ab4f8]/30",
+    gold: "bg-[#332800] text-[#fdd663] border-[#fdd663]/30",
+    yellow: "bg-[#332800] text-[#fdd663] border-[#fdd663]/30",
+    green: "bg-[#0d2818] text-[#81c995] border-[#81c995]/30",
+    sage: "bg-[#0d2818] text-[#81c995] border-[#81c995]/30",
+    red: "bg-[#331111] text-[#f28b82] border-[#f28b82]/30",
+    terracotta: "bg-[#331111] text-[#f28b82] border-[#f28b82]/30",
+    purple: "bg-[#281438] text-[#c58af9] border-[#c58af9]/30",
+    steel: "bg-[#1b2b44] text-[#8ab4f8] border-[#8ab4f8]/30",
   }[glowColor];
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -65,47 +77,62 @@ export const BentoCard: React.FC<BentoCardProps> = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0d0d11]/80 backdrop-blur-2xl p-6 transition-all duration-300",
+        "group relative overflow-hidden rounded-2xl border border-[#3c4043] bg-[#202124] p-6 transition-all duration-300 shadow-md",
         borderHoverStyles,
         className
       )}
     >
-      {/* Subdued radial specular light */}
+      {/* Specular Google spotlight on hover */}
       {isHovered && (
         <div
           className="pointer-events-none absolute -inset-px transition-opacity duration-300 opacity-100"
           style={{
-            background: `radial-gradient(350px circle at ${mousePos.x}px ${mousePos.y}px, ${glowStyles}, transparent 70%)`,
+            background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, ${glowStyles}, transparent 70%)`,
           }}
         />
       )}
 
-      {/* Hairline top subtle rim light */}
-      <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent group-hover:via-white/[0.14] transition-all" />
-
       {/* Header if badge/title provided */}
       {(badge || title) && (
-        <div className="relative z-10 mb-4 flex items-start justify-between gap-2">
-          <div>
+        <div className="relative z-10 mb-5">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
             {badge && (
-              <span className="inline-block text-[10px] font-mono uppercase tracking-wider text-[#d4af37] bg-[#221e14] border border-[#d4af37]/25 px-2 py-0.5 rounded-full mb-1.5">
+              <span
+                className={cn(
+                  "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-sans font-medium tracking-wide uppercase border",
+                  badgeColorStyles
+                )}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-current opacity-80" />
                 {badge}
               </span>
             )}
-            {title && (
-              <h3 className="text-base font-semibold text-zinc-100 tracking-tight flex items-center gap-2">
-                {title}
-              </h3>
-            )}
-            {subtitle && (
-              <p className="text-xs text-zinc-400 mt-0.5">{subtitle}</p>
-            )}
           </div>
+          {title && (
+            <h3 className="text-lg sm:text-xl font-bold font-sans tracking-tight text-[#e8eaed]">
+              {title}
+            </h3>
+          )}
+          {subtitle && (
+            <p className="text-xs sm:text-sm text-[#9aa0a6] mt-1 font-sans">
+              {subtitle}
+            </p>
+          )}
         </div>
       )}
 
-      {/* Card Content */}
       <div className="relative z-10">{children}</div>
+    </div>
+  );
+};
+
+export const BentoGrid: React.FC<{ children: React.ReactNode; className?: string }> = ({
+  children,
+  className,
+}) => {
+  return (
+    <div className={cn("grid grid-cols-1 md:grid-cols-12 gap-6", className)}>
+      {children}
     </div>
   );
 };

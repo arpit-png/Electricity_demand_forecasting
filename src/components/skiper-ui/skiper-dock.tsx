@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Activity, Sliders, Cpu, Database, Layers, ArrowUp } from "lucide-react";
+import { Activity, Sliders, Cpu, Database, Layers, ArrowUp, BarChart3, CloudRain } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SkiperDockProps {
@@ -15,7 +15,7 @@ export const SkiperDock: React.FC<SkiperDockProps> = ({ onOpenVault }) => {
   const dockItems = [
     {
       id: "visualizer",
-      label: "24h Duck Curve",
+      label: "Duck Curve Analytics",
       icon: Activity,
       onClick: () => {
         document.getElementById("visualizer")?.scrollIntoView({ behavior: "smooth" });
@@ -23,7 +23,7 @@ export const SkiperDock: React.FC<SkiperDockProps> = ({ onOpenVault }) => {
     },
     {
       id: "sandbox",
-      label: "Stress Sandbox",
+      label: "Grid Scenario Sandbox",
       icon: Sliders,
       onClick: () => {
         document.getElementById("sandbox")?.scrollIntoView({ behavior: "smooth" });
@@ -31,7 +31,7 @@ export const SkiperDock: React.FC<SkiperDockProps> = ({ onOpenVault }) => {
     },
     {
       id: "models",
-      label: "ML Benchmark",
+      label: "Vertex AI Benchmarks",
       icon: Cpu,
       onClick: () => {
         document.getElementById("models")?.scrollIntoView({ behavior: "smooth" });
@@ -39,7 +39,7 @@ export const SkiperDock: React.FC<SkiperDockProps> = ({ onOpenVault }) => {
     },
     {
       id: "architecture",
-      label: "System Specs",
+      label: "BigQuery & Dataform",
       icon: Layers,
       onClick: () => {
         document.getElementById("architecture")?.scrollIntoView({ behavior: "smooth" });
@@ -47,7 +47,7 @@ export const SkiperDock: React.FC<SkiperDockProps> = ({ onOpenVault }) => {
     },
     {
       id: "vault",
-      label: "Database Vault",
+      label: "Cloud Firestore Vault",
       icon: Database,
       onClick: onOpenVault,
       badge: "Firestore",
@@ -59,8 +59,8 @@ export const SkiperDock: React.FC<SkiperDockProps> = ({ onOpenVault }) => {
   };
 
   return (
-    <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
-      <div className="flex items-center gap-1.5 p-2 rounded-2xl bg-[#0e0e13]/90 border border-white/[0.09] backdrop-blur-2xl shadow-2xl transition-all">
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 pointer-events-auto">
+      <div className="flex items-center gap-2 p-2 rounded-full bg-[#202124]/95 border border-[#3c4043] backdrop-blur-2xl shadow-2xl transition-all">
         {dockItems.map((item, idx) => {
           const Icon = item.icon;
 
@@ -73,34 +73,44 @@ export const SkiperDock: React.FC<SkiperDockProps> = ({ onOpenVault }) => {
               whileHover={{ scale: 1.15, y: -4 }}
               whileTap={{ scale: 0.95 }}
               className={cn(
-                "relative group flex items-center justify-center w-10 h-10 rounded-xl text-zinc-400 hover:text-white transition-colors",
-                "bg-white/[0.03] hover:bg-white/[0.09] border border-white/5 hover:border-white/15"
+                "relative flex items-center justify-center w-10 h-10 rounded-full transition-colors",
+                "bg-[#28292c] hover:bg-[#303134] text-[#9aa0a6] hover:text-[#8ab4f8] border border-[#3c4043]"
               )}
             >
               <Icon className="w-4 h-4" />
 
               {/* Tooltip */}
-              <div className="absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap px-2 py-1 rounded-md bg-[#18181d] border border-white/10 text-[10px] font-mono text-zinc-200 shadow-xl">
-                {item.label}
-              </div>
-
-              {item.badge && (
-                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-[#d4af37] shadow-[0_0_6px_#d4af37]" />
+              {hoveredIdx === idx && (
+                <motion.div
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: -38 }}
+                  exit={{ opacity: 0, y: 6 }}
+                  className="absolute pointer-events-none whitespace-nowrap px-2.5 py-1 rounded-md bg-[#303134] text-[#e8eaed] text-[11px] font-sans font-medium border border-[#5f6368] shadow-lg flex items-center gap-1.5"
+                >
+                  <span>{item.label}</span>
+                  {item.badge && (
+                    <span className="px-1.5 py-0.2 rounded-full text-[9px] bg-[#0d2818] text-[#81c995] font-mono border border-[#81c995]/30">
+                      {item.badge}
+                    </span>
+                  )}
+                </motion.div>
               )}
             </motion.button>
           );
         })}
 
-        <div className="w-[1px] h-6 bg-white/10 mx-1" />
+        <div className="h-5 w-[1px] bg-[#3c4043] mx-1" />
 
-        {/* Scroll To Top */}
-        <button
+        {/* Scroll To Top Action */}
+        <motion.button
           onClick={scrollToTop}
-          title="Return to top"
-          className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.03] hover:bg-white/[0.09] text-zinc-400 hover:text-white border border-white/5 transition-colors"
+          whileHover={{ scale: 1.15, y: -4 }}
+          whileTap={{ scale: 0.95 }}
+          className="flex items-center justify-center w-10 h-10 rounded-full bg-[#1b2b44] hover:bg-[#25395a] text-[#8ab4f8] border border-[#8ab4f8]/40 transition-colors"
+          title="Scroll to Top"
         >
           <ArrowUp className="w-4 h-4" />
-        </button>
+        </motion.button>
       </div>
     </div>
   );

@@ -3,15 +3,17 @@
 import React, { useEffect, useRef } from "react";
 
 interface SkiperFrequencyWaveProps {
-  rampRate: number;
-  status: "STABLE" | "ELEVATED_RAMP" | "CRITICAL_DISPATCH_REQUIRED";
+  frequencyHz?: number;
+  rampRateMW?: number;
+  isPeakRamp?: boolean;
 }
 
 export const SkiperFrequencyWave: React.FC<SkiperFrequencyWaveProps> = ({
-  rampRate,
-  status,
+  frequencyHz = 50.0,
+  rampRateMW = 0,
+  isPeakRamp = false,
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -20,43 +22,57 @@ export const SkiperFrequencyWave: React.FC<SkiperFrequencyWaveProps> = ({
     if (!ctx) return;
 
     let animId: number;
-    let t = 0;
+    let width = (canvas.width = canvas.parentElement?.clientWidth || 400);
+    let height = (canvas.height = 110);
 
-    // Quiet luxury colors
-    const color = {
-      STABLE: "#5a9a7c",              // Celadon Sage
-      ELEVATED_RAMP: "#d4af37",       // Brushed Champagne Gold
-      CRITICAL_DISPATCH_REQUIRED: "#c86754", // Smoked Terracotta
-    }[status];
+    let phase = 0;
 
     const render = () => {
-      t += 0.035;
-      const w = (canvas.width = canvas.parentElement?.clientWidth || 300);
-      const h = (canvas.height = 70);
+      ctx.clearRect(0, 0, width, height);
 
-      ctx.clearRect(0, 0, w, h);
-
-      // Baseline grid line
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+      // Google Material 3 Grid Lines
+      ctx.strokeStyle = "#303134";
       ctx.lineWidth = 1;
-      ctx.setLineDash([3, 4]);
+
+      // Draw horizontal reference lines
+      const yCenter = height / 2;
       ctx.beginPath();
-      ctx.moveTo(0, h / 2);
-      ctx.lineTo(w, h / 2);
+      ctx.setLineDash([4, 4]);
+      ctx.moveTo(0, yCenter);
+      ctx.lineTo(width, yCenter);
+      ctx.moveTo(0, yCenter - 28);
+      ctx.lineTo(width, yCenter - 28);
+      ctx.moveTo(0, yCenter + 28);
+      ctx.lineTo(width, yCenter + 28);
       ctx.stroke();
       ctx.setLineDash([]);
 
-      // Draw subtle wave
-      ctx.lineWidth = 1.75;
-      ctx.strokeStyle = color;
+      // Wave Color based on Google System Alert
+      let waveStroke = "#8ab4f8"; // Google Blue 300 (Normal)
+      if (isPeakRamp || Math.abs(rampRateMW) > 3000) {
+        waveStroke = "#f28b82"; // Google Red 300 (Critical Ramp)
+      } else if (Math.abs(rampRateMW) > 1500) {
+        waveStroke = "#fdd663"; // Google Yellow 300 (Elevated)
+      }
+
+      // Draw primary AC Sine wave
       ctx.beginPath();
+      ctx.strokeStyle = waveStroke;
+      ctx.lineWidth = 2.5;
 
-      const waveSpeed = t * 1.5;
-      const amplitude = status === "CRITICAL_DISPATCH_REQUIRED" ? 18 : 12;
+      const speed = (frequencyHz / 50.0) * 0.08;
+      phase += speed;
 
-      for (let x = 0; x < w; x++) {
-        const harmonic = Math.sin(x * 0.025 + waveSpeed) + 0.2 * Math.sin(x * 0.05 - waveSpeed * 1.2);
-        const y = h / 2 + harmonic * amplitude;
+      // Higher harmonic distortion on steep duck ramps
+      const harmonicDistortion = isPeakRamp ? 0.35 : 0.04;
+
+      for (let x = 0; x < width; x++) {
+        const rad = (x / width) * Math.PI * 4 + phase;
+        // Fundamental frequency + 3rd harmonic
+        const fundamental = Math.sin(rad);
+        const thirdHarmonic = Math.sin(rad * 3 + phase * 0.5) * harmonicDistortion;
+        const y = yCenter + (fundamental + thirdHarmonic) * 32;
+
         if (x === 0) {
           ctx.moveTo(x, y);
         } else {
@@ -65,15 +81,12 @@ export const SkiperFrequencyWave: React.FC<SkiperFrequencyWaveProps> = ({
       }
       ctx.stroke();
 
-      // Soft luxury underglow
-      ctx.lineTo(w, h);
-      ctx.lineTo(0, h);
-      ctx.closePath();
-      const grad = ctx.createLinearGradient(0, 0, 0, h);
-      grad.addColorStop(0, `${color}18`);
-      grad.addColorStop(1, "transparent");
-      ctx.fillStyle = grad;
-      ctx.fill();
+      // Subtle underglow
+      ctx.strokeStyle = waveStroke;
+      ctx.lineWidth = 8;
+      ctx.globalAlpha = 0.15;
+      ctx.stroke();
+      ctx.globalAlpha = 1.0;
 
       animId = requestAnimationFrame(render);
     };
@@ -81,20 +94,28 @@ export const SkiperFrequencyWave: React.FC<SkiperFrequencyWaveProps> = ({
     render();
 
     return () => cancelAnimationFrame(animId);
-  }, [rampRate, status]);
+  }, [frequencyHz, rampRateMW, isPeakRamp]);
 
   return (
-    <div className="w-full relative overflow-hidden rounded-xl bg-[#09090d]/80 border border-white/[0.06] p-2.5">
-      <div className="flex items-center justify-between text-[10px] font-mono mb-1 text-zinc-400">
-        <span className="flex items-center gap-1.5">
-          <span className={`w-1.5 h-1.5 rounded-full ${status === "STABLE" ? "bg-[#5a9a7c]" : status === "ELEVATED_RAMP" ? "bg-[#d4af37]" : "bg-[#c86754]"}`} />
-          AC Frequency Real-Time Waveform
-        </span>
-        <span className="font-bold text-zinc-200">
-          {(50.0 + (rampRate > 2500 ? -0.04 : (Math.sin(Date.now() / 1500) * 0.015))).toFixed(2)} Hz
-        </span>
+    <div className="w-full relative rounded-xl bg-[#18191c] border border-[#3c4043] p-3 overflow-hidden select-none">
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <span className={`w-2 h-2 rounded-full ${isPeakRamp ? "bg-[#ea4335] animate-ping" : "bg-[#34a853]"}`} />
+          <span className="text-xs font-sans font-medium text-[#e8eaed]">AC Frequency Synchronous Oscilloscope</span>
+        </div>
+        <div className="flex items-center gap-2 font-mono text-xs">
+          <span className="text-[#9aa0a6]">Nominal: 50.00 Hz</span>
+          <span className={`font-bold ${isPeakRamp ? "text-[#f28b82]" : "text-[#81c995]"}`}>
+            {frequencyHz.toFixed(2)} Hz
+          </span>
+        </div>
       </div>
       <canvas ref={canvasRef} className="w-full block" />
+      <div className="flex items-center justify-between mt-2 text-[10px] font-mono text-[#9aa0a6]">
+        <span>-35 ms</span>
+        <span className="text-[#8ab4f8]">Zero-Crossing Interconnect Sync</span>
+        <span>+35 ms</span>
+      </div>
     </div>
   );
 };

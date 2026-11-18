@@ -1,73 +1,115 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
+import { TrendingUp, TrendingDown, AlertTriangle, ShieldCheck, Activity, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SkiperStatCardProps {
   label: string;
-  value: string;
-  unit?: string;
-  change?: string;
-  changeType?: "positive" | "negative" | "warning" | "neutral";
+  value: string | number;
+  subValue?: string;
+  trend?: "up" | "down" | "neutral" | "warning";
+  trendLabel?: string;
   icon?: React.ReactNode;
-  description?: string;
-  className?: string;
-  highlightColor?: "cyan" | "amber" | "rose" | "purple" | "emerald";
+  variant?: "default" | "critical" | "warning" | "success" | "blue" | "purple";
+  badge?: string;
 }
 
 export const SkiperStatCard: React.FC<SkiperStatCardProps> = ({
   label,
   value,
-  unit,
-  change,
-  changeType = "neutral",
+  subValue,
+  trend,
+  trendLabel,
   icon,
-  description,
-  className,
-  highlightColor = "amber",
+  variant = "default",
+  badge,
 }) => {
-  const badgeColors = {
-    positive: "bg-[#141d18] text-[#5a9a7c] border-[#5a9a7c]/25",
-    negative: "bg-[#251715] text-[#e07563] border-[#c86754]/25",
-    warning: "bg-[#211d14] text-[#e5c268] border-[#d4af37]/25",
-    neutral: "bg-white/[0.04] text-zinc-400 border-white/[0.08]",
-  }[changeType];
-
-  const valueGlow = {
-    amber: "text-[#e5c268]",
-    cyan: "text-[#8fa8c0]",
-    rose: "text-[#e07563]",
-    purple: "text-[#9d8ec2]",
-    emerald: "text-[#6aa88a]",
-  }[highlightColor];
+  const variantStyles = {
+    default: {
+      border: "border-[#3c4043] hover:border-[#8ab4f8]/50",
+      accent: "text-[#8ab4f8]",
+      badge: "bg-[#18191c] text-[#9aa0a6] border-[#3c4043]",
+    },
+    blue: {
+      border: "border-[#3c4043] hover:border-[#8ab4f8]/70",
+      accent: "text-[#8ab4f8]",
+      badge: "bg-[#1b2b44] text-[#8ab4f8] border-[#8ab4f8]/30",
+    },
+    critical: {
+      border: "border-[#ea4335]/40 hover:border-[#ea4335]/70",
+      accent: "text-[#f28b82]",
+      badge: "bg-[#331111] text-[#f28b82] border-[#f28b82]/40",
+    },
+    warning: {
+      border: "border-[#fbbc04]/40 hover:border-[#fbbc04]/70",
+      accent: "text-[#fdd663]",
+      badge: "bg-[#332800] text-[#fdd663] border-[#fdd663]/40",
+    },
+    success: {
+      border: "border-[#34a853]/40 hover:border-[#34a853]/70",
+      accent: "text-[#81c995]",
+      badge: "bg-[#0d2818] text-[#81c995] border-[#81c995]/40",
+    },
+    purple: {
+      border: "border-[#a142f4]/40 hover:border-[#a142f4]/70",
+      accent: "text-[#c58af9]",
+      badge: "bg-[#281438] text-[#c58af9] border-[#c58af9]/40",
+    },
+  }[variant];
 
   return (
-    <div
+    <motion.div
+      whileHover={{ y: -2 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
       className={cn(
-        "relative overflow-hidden rounded-xl border border-white/[0.07] bg-[#0d0d12]/80 p-4 backdrop-blur-xl transition-all duration-300 hover:border-white/[0.14]",
-        className
+        "relative overflow-hidden rounded-2xl bg-[#202124] border p-5 shadow-sm transition-all duration-200",
+        variantStyles.border
       )}
     >
-      <div className="flex items-center justify-between text-xs text-zinc-400 font-mono mb-2">
-        <span className="uppercase tracking-wider text-[10px] text-zinc-400">{label}</span>
-        {icon && <span className="text-zinc-400">{icon}</span>}
-      </div>
-
-      <div className="flex items-baseline gap-1.5 my-1">
-        <span className={cn("text-2xl font-bold font-mono tracking-tight", valueGlow)}>
-          {value}
+      {/* Top Header Row */}
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <span className="text-xs font-sans text-[#9aa0a6] font-medium tracking-tight">
+          {label}
         </span>
-        {unit && <span className="text-xs font-mono text-zinc-400">{unit}</span>}
-      </div>
-
-      <div className="mt-2 flex items-center justify-between text-[11px]">
-        {change && (
-          <span className={cn("px-1.5 py-0.5 rounded border text-[10px] font-mono", badgeColors)}>
-            {change}
+        {icon && (
+          <span className={cn("p-1.5 rounded-lg bg-[#28292c]", variantStyles.accent)}>
+            {icon}
           </span>
         )}
-        {description && <span className="text-zinc-500 text-[10px]">{description}</span>}
       </div>
-    </div>
+
+      {/* Main Metric Value */}
+      <div className="flex items-baseline gap-2 mb-1.5">
+        <span className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-[#e8eaed]">
+          {value}
+        </span>
+        {subValue && (
+          <span className="text-xs text-[#9aa0a6] font-mono">
+            {subValue}
+          </span>
+        )}
+      </div>
+
+      {/* Bottom Trend / Badge Row */}
+      <div className="flex items-center justify-between gap-2 mt-3 pt-2.5 border-t border-[#3c4043]/60 text-xs">
+        {trendLabel && (
+          <div className="flex items-center gap-1">
+            {trend === "up" && <TrendingUp className="w-3.5 h-3.5 text-[#f28b82]" />}
+            {trend === "down" && <TrendingDown className="w-3.5 h-3.5 text-[#81c995]" />}
+            {trend === "warning" && <AlertTriangle className="w-3.5 h-3.5 text-[#fdd663]" />}
+            {trend === "neutral" && <Activity className="w-3.5 h-3.5 text-[#8ab4f8]" />}
+            <span className="text-[11px] font-sans text-[#9aa0a6]">{trendLabel}</span>
+          </div>
+        )}
+
+        {badge && (
+          <span className={cn("ml-auto px-2 py-0.5 rounded-full text-[10px] font-mono border", variantStyles.badge)}>
+            {badge}
+          </span>
+        )}
+      </div>
+    </motion.div>
   );
 };

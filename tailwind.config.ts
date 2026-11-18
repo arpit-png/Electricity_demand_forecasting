@@ -10,61 +10,82 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#09090c",
-        foreground: "#f4f4f6",
+        background: "#131314", // Google Dark canvas (Google AI Studio / Gemini Dark)
+        foreground: "#e8eaed", // Google Text Primary
         card: {
-          DEFAULT: "#111115",
-          foreground: "#f4f4f6",
+          DEFAULT: "#202124",  // Google Surface Container
+          foreground: "#e8eaed",
         },
         popover: {
-          DEFAULT: "#111115",
-          foreground: "#f4f4f6",
+          DEFAULT: "#28292c",
+          foreground: "#e8eaed",
         },
         primary: {
-          DEFAULT: "#d4af37", // Brushed Champagne Gold
-          foreground: "#09090c",
+          DEFAULT: "#8ab4f8", // Google Blue 300 (Dark Theme Primary)
+          foreground: "#041e49",
         },
         secondary: {
-          DEFAULT: "#18181d",
-          foreground: "#e4e4e7",
+          DEFAULT: "#303134", // Google Surface Container Highest
+          foreground: "#e8eaed",
         },
         muted: {
-          DEFAULT: "#1c1c22",
-          foreground: "#a1a1aa",
+          DEFAULT: "#28292c",
+          foreground: "#9aa0a6",
         },
         accent: {
-          DEFAULT: "#cfac62",
-          foreground: "#09090c",
+          DEFAULT: "#81c995", // Google Green 300
+          foreground: "#072711",
         },
-        border: "rgba(255, 255, 255, 0.08)",
-        luxury: {
-          gold: "#d4af37",
-          champagne: "#e6cca0",
-          bronze: "#b89758",
-          steel: "#788ca0",
-          terracotta: "#c86754",
-          sage: "#5a9a7c",
-          charcoal: "#121216",
-          graphite: "#18181e",
+        border: "#3c4043",    // Google Outline
+        google: {
+          blue: "#4285f4",
+          blueDark: "#1a73e8",
+          blueLight: "#8ab4f8",
+          blueContainer: "#174ea6",
+          red: "#ea4335",
+          redDark: "#d93025",
+          redLight: "#f28b82",
+          redContainer: "#5c1d1d",
+          yellow: "#fbbc04",
+          yellowDark: "#f9ab00",
+          yellowLight: "#fdd663",
+          yellowContainer: "#553b00",
+          green: "#34a853",
+          greenDark: "#1e8e3e",
+          greenLight: "#81c995",
+          greenContainer: "#0d652d",
+          purple: "#a142f4",
+          purpleLight: "#c58af9",
+          purpleContainer: "#4a154b",
+          canvas: "#131314",
+          surface: "#202124",
+          surfaceLow: "#18191c",
+          surfaceHigh: "#28292c",
+          surfaceHighest: "#303134",
+          outline: "#3c4043",
+          outlineVariant: "#5f6368",
+          textPrimary: "#e8eaed",
+          textSecondary: "#9aa0a6",
         },
         grid: {
-          demand: "#788ca0",     // Smoked Steel Slate
-          solar: "#d4af37",      // Brushed Champagne Gold
-          wind: "#9aa9b8",       // Mist Platinum
-          net: "#c86754",        // Smoked Terracotta
-          battery: "#5a9a7c",    // Celadon Sage
-          lstm: "#9d8ec2",       // Muted Iris
+          demand: "#8ab4f8",     // Google Blue (Gross Demand)
+          solar: "#fdd663",      // Google Yellow (Solar Belly)
+          wind: "#81c995",       // Google Green (Wind Renewables)
+          net: "#c58af9",        // Google Iris / DeepMind Purple (Net Demand / Duck Curve)
+          battery: "#78d9ec",    // Google Cyan (BESS Storage Buffer)
+          peaker: "#f28b82",     // Google Red (Evening Ramp & Peaker Generation)
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "-apple-system", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+        sans: ["'Google Sans'", "'Google Sans Text'", "Roboto", "system-ui", "-apple-system", "sans-serif"],
+        mono: ["'Roboto Mono'", "'Google Sans Code'", "monospace"],
       },
       animation: {
         "shimmer": "shimmer 3s linear infinite",
         "pulse-slow": "pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "ticker": "ticker 40s linear infinite",
         "float": "float 7s ease-in-out infinite",
+        "google-bar": "googleGradient 6s ease infinite",
       },
       keyframes: {
         shimmer: {
@@ -78,6 +99,10 @@ const config: Config = {
         float: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-6px)" },
+        },
+        googleGradient: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
         },
       },
     },
