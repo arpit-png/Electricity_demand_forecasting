@@ -116,21 +116,33 @@ export const SimulationHistoryModal: React.FC<SimulationHistoryModalProps> = ({
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <input
-                type="text"
-                placeholder="Scenario Name (e.g., July Peak Heatwave #2)"
-                value={simName}
-                onChange={(e) => setSimName(e.target.value)}
-                required
-                className="w-full px-3 py-2 rounded-lg border text-xs focus:outline-none focus:border-blue-500 bg-white border-slate-200 text-slate-900 placeholder-slate-400 dark:bg-slate-800 dark:border-slate-700 dark:text-white dark:placeholder-slate-500"
-              />
-              <input
-                type="text"
-                placeholder="Optional Notes / Dispatch Strategy"
-                value={simNotes}
-                onChange={(e) => setSimNotes(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border text-xs focus:outline-none focus:border-blue-500 bg-white border-slate-200 text-slate-900 placeholder-slate-400 dark:bg-slate-800 dark:border-slate-700 dark:text-white dark:placeholder-slate-500"
-              />
+              <div>
+                <label htmlFor="sim-name-input" className="block text-[11px] font-medium text-slate-700 dark:text-slate-300 mb-1">
+                  Scenario Identification Name
+                </label>
+                <input
+                  id="sim-name-input"
+                  type="text"
+                  aria-label="Scenario Identification Name"
+                  value={simName}
+                  onChange={(e) => setSimName(e.target.value)}
+                  required
+                  className="w-full px-3 py-2 rounded-lg border text-xs focus:outline-none focus:border-blue-500 bg-white border-slate-200 text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+                />
+              </div>
+              <div>
+                <label htmlFor="sim-notes-input" className="block text-[11px] font-medium text-slate-700 dark:text-slate-300 mb-1">
+                  Dispatch Strategy / Engineering Notes
+                </label>
+                <input
+                  id="sim-notes-input"
+                  type="text"
+                  aria-label="Dispatch Strategy / Engineering Notes"
+                  value={simNotes}
+                  onChange={(e) => setSimNotes(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border text-xs focus:outline-none focus:border-blue-500 bg-white border-slate-200 text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+                />
+              </div>
             </div>
 
             <div className="flex items-center justify-between pt-1">

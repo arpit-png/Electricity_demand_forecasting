@@ -294,30 +294,6 @@ export default function HomePage() {
           showNotification("Restored scenario from database archive!");
         }}
       />
-
-      {/* Institutional Clean Footer */}
-      <footer className="mt-20 border-t border-slate-200 dark:border-slate-800 py-10 text-xs text-slate-500 dark:text-slate-400 text-center max-w-7xl mx-auto px-4">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-            <span className="w-2 h-2 rounded-full bg-blue-500" />
-            <span className="font-medium">Electricity Net Demand Forecasting &amp; Duck Curve Intelligence Platform</span>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <span>Time-Series Forecasting</span>
-            <span>•</span>
-            <span>Bidirectional LSTM</span>
-            <span>•</span>
-            <span>Gradient Boosted Trees</span>
-            <span>•</span>
-            <span>IEEE 1547 Standards</span>
-          </div>
-
-          <div className="text-[11px] font-mono">
-            Production Vercel Ready • Resilient Database Vault
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -35,7 +35,7 @@ let app: FirebaseApp | null = null;
 let db: Firestore | null = null;
 let isFirebaseConfigured = false;
 
-// Check if credentials exist and are not placeholders
+// Verify that active production credentials are provided
 if (
   typeof window !== "undefined" &&
   firebaseConfig.apiKey &&
